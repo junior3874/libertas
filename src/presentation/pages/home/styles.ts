@@ -6,8 +6,10 @@ export const Container = styled.View`
 `;
 
 export const Content = styled.View`
-  padding: 16px;
+  padding-left: 20px;
+  padding-right: 20px;
   padding-top: 52px;
+  margin-bottom: 52px;
 `;
 
 export const HeaderCornerImage = styled.Image`
@@ -25,6 +27,20 @@ export const HeaderSubtitle = styled.Text`
   color: #ffffff;
   font-size: 14px;
   margin-top: 6px;
+`;
+
+type HabitWrapperProps = {
+  lastHabit: boolean;
+};
+
+export const HabitWrapper = styled.View<HabitWrapperProps>`
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: ${({ lastHabit }) => (lastHabit ? "116px" : "0")};
+`;
+
+export const Separator = styled.View`
+  height: 16px;
 `;
 
 export const AddHabitButtonWrapper = styled.View`
