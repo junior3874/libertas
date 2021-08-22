@@ -1,4 +1,5 @@
 import React from "react";
+import { Image } from "react-native";
 import {
   formatDistanceStrict,
   formatDuration,
@@ -9,20 +10,19 @@ import { ptBR } from "date-fns/locale";
 
 import {
   Container,
-  ImageHabitArea,
+  FlexContent,
   ImageHabit,
   HabitInformationArea,
   HabitInformationText,
   HabitInformationLastDate,
   HabitOptionsArea,
-  HabitOptionsImage,
 } from "./styles";
 
 const Pill = require("../../assets/pill.png");
 const Cigar = require("../../assets/cigar.png");
 const Coffe = require("../../assets/coffee.png");
 const Other = require("../../assets/other.png");
-const Plus = require("../../assets/plus.png");
+const MoreImg = require("../../assets/more.png");
 
 type HabitProps = {
   name: string;
@@ -34,23 +34,25 @@ export default function Habit({ name, lastDate }: HabitProps) {
     start: lastDate,
     end: new Date(),
   });
+
   const distance = formatDuration(
     { ...getDistanceCurrentDataBetweenLastDate },
     { locale: ptBR }
   );
+
   return (
     <Container>
-      <ImageHabitArea>
-        <ImageHabit source={Other} />
-      </ImageHabitArea>
-      <HabitInformationArea>
-        <HabitInformationText>
-          Você está a 5 dias sem {name}
-        </HabitInformationText>
-        <HabitInformationLastDate>{`${distance}`}</HabitInformationLastDate>
-      </HabitInformationArea>
+      <FlexContent>
+        <ImageHabit source={Cigar} />
+        <HabitInformationArea>
+          <HabitInformationText>
+            Você está a 5 dias sem {name}
+          </HabitInformationText>
+          <HabitInformationLastDate>{`${distance}`}</HabitInformationLastDate>
+        </HabitInformationArea>
+      </FlexContent>
       <HabitOptionsArea>
-        <HabitOptionsImage source={Plus} />
+        <Image source={MoreImg} />
       </HabitOptionsArea>
     </Container>
   );

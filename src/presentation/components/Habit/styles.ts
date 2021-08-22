@@ -9,10 +9,17 @@ export const Container = styled.TouchableOpacity`
   border-radius: 3px;
 `;
 
-export const ImageHabitArea = styled.View``;
+export const FlexContent = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
 export const ImageHabit = styled.Image``;
 
-export const HabitInformationArea = styled.View``;
+export const HabitInformationArea = styled.View`
+  margin-left: 16px;
+`;
+
 export const HabitInformationText = styled.Text`
   margin-bottom: 5px;
   font-family: Poppins;
@@ -30,8 +37,6 @@ export const HabitInformationLastDate = styled.Text`
   font-size: 16px;
   line-height: 24px;
 
-  /* identical to box height */
-
   color: #6410e6;
 `;
 
@@ -40,4 +45,3 @@ export const HabitOptionsArea = styled.View`
   margin-top: -20px;
   margin-right: -5px;
 `;
-export const HabitOptionsImage = styled.Image``;
