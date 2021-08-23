@@ -5,8 +5,6 @@ import {
   Container,
   Content,
   HeaderCornerImage,
-  HeaderTitle,
-  HeaderSubtitle,
   HabitWrapper,
   Separator,
   AddHabitButtonWrapper,
@@ -14,6 +12,7 @@ import {
 } from "./styles";
 
 import Habit from "../../components/Habit";
+import HeaderText from "../../components/HeaderText";
 
 const PatternsImg = require("../../assets/patterns.png");
 const PlusImg = require("../../assets/plus.png");
@@ -41,10 +40,8 @@ export default function Home() {
           <Content>
             <HeaderCornerImage source={PatternsImg} />
 
-            <HeaderTitle>Seja bem vindo</HeaderTitle>
-            <HeaderSubtitle>
-              Você tem 3 hábitos a serem quebrados
-            </HeaderSubtitle>
+            <HeaderText.Title message="Seja bem vindo" />
+            <HeaderText.Subtitle message="Você tem 3 hábitos a serem quebrados" />
           </Content>
         )}
       />
