@@ -1,5 +1,6 @@
 import React from "react";
 import { Image, FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   Container,
@@ -18,6 +19,12 @@ const PatternsImg = require("../../assets/patterns.png");
 const PlusImg = require("../../assets/plus.png");
 
 export default function Home() {
+  const navigation = useNavigation();
+
+  function navigateTo(pageName: string, params = {}): void {
+    navigation.navigate(pageName as never, params as never);
+  }
+
   return (
     <Container>
       <FlatList
@@ -32,7 +39,15 @@ export default function Home() {
         keyExtractor={(habit) => habit.name}
         renderItem={({ item: habit, index }: { item: any; index: number }) => (
           <HabitWrapper lastHabit={index === 5}>
-            <Habit name={habit.name} lastDate={habit.lastDate} />
+            <Habit
+              name={habit.name}
+              lastDate={habit.lastDate}
+              onPress={() =>
+                navigateTo("Habit", {
+                  performedLastDate: new Date("2021-08-18T22:49:21+00:00"),
+                })
+              }
+            />
           </HabitWrapper>
         )}
         ItemSeparatorComponent={() => <Separator />}
@@ -47,7 +62,7 @@ export default function Home() {
       />
 
       <AddHabitButtonWrapper>
-        <AddHabitButton>
+        <AddHabitButton onPress={() => navigateTo("CreateHabit")}>
           <Image source={PlusImg} />
         </AddHabitButton>
       </AddHabitButtonWrapper>
