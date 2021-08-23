@@ -4,8 +4,15 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import Home from "./pages/home";
 import CreateHabit from "./pages/createHabit";
+import Habit from "./pages/habit";
 
-const Stack = createNativeStackNavigator();
+export type StackParamList = {
+  Home: undefined;
+  CreateHabit: undefined;
+  Habit: { habit: any };
+};
+
+const Stack = createNativeStackNavigator<StackParamList>();
 
 export default function Routes() {
   return (
@@ -18,6 +25,7 @@ export default function Routes() {
       >
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="CreateHabit" component={CreateHabit} />
+        <Stack.Screen name="Habit" component={Habit} />
       </Stack.Navigator>
     </NavigationContainer>
   );
