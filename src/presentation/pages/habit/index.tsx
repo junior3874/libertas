@@ -1,7 +1,11 @@
+import { RouteProp, useIsFocused, useRoute } from "@react-navigation/native";
 import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 import BtnGeneric from "../../components/btnGeneric";
 import GoBackButton from "../../components/GoBackButton";
 import HeaderText from "../../components/HeaderText";
+import { StackParamList } from "../../routes";
 
 import {
   Container,
@@ -12,8 +16,39 @@ import {
   TimeElapsedTitle,
   TimeElapsedCount,
 } from "./styles";
+import { getTimeSince, TimeSince } from "./utils/getTimeSince";
+
+let callFunctionToGetTimeElapsedInterval: any = null;
 
 export default function Habit() {
+  const isFocused = useIsFocused();
+  const route = useRoute<RouteProp<StackParamList, "Habit">>();
+  const [timeElapsed, setTimeElapsed] = useState<TimeSince>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    clearInterval(callFunctionToGetTimeElapsedInterval);
+
+    const { performedLastDate } = route.params;
+    if (performedLastDate) {
+      setTimeElapsed(getTimeSince(performedLastDate));
+      callFunctionToGetTimeElapsedInterval = setInterval(
+        () => setTimeElapsed(getTimeSince(performedLastDate)),
+        1000
+      );
+    }
+  }, [route]);
+
+  useEffect(() => {
+    if (!isFocused) {
+      clearInterval(callFunctionToGetTimeElapsedInterval);
+    }
+  }, [isFocused]);
+
   return (
     <Container>
       <GoBackButton />
@@ -26,14 +61,14 @@ export default function Habit() {
           <TimeElapsedBoxWrapper>
             <TimeElapsedBox>
               <TimeElapsedTitle>Dias</TimeElapsedTitle>
-              <TimeElapsedCount>3</TimeElapsedCount>
+              <TimeElapsedCount>{timeElapsed.days}</TimeElapsedCount>
             </TimeElapsedBox>
           </TimeElapsedBoxWrapper>
 
           <TimeElapsedBoxWrapper isRightSideElement>
             <TimeElapsedBox isRightSideElement>
               <TimeElapsedTitle>Horas</TimeElapsedTitle>
-              <TimeElapsedCount>7</TimeElapsedCount>
+              <TimeElapsedCount>{timeElapsed.hours}</TimeElapsedCount>
             </TimeElapsedBox>
           </TimeElapsedBoxWrapper>
         </TimeElapsedBoxPairContainer>
@@ -42,14 +77,14 @@ export default function Habit() {
           <TimeElapsedBoxWrapper>
             <TimeElapsedBox>
               <TimeElapsedTitle>Minutos</TimeElapsedTitle>
-              <TimeElapsedCount>23</TimeElapsedCount>
+              <TimeElapsedCount>{timeElapsed.minutes}</TimeElapsedCount>
             </TimeElapsedBox>
           </TimeElapsedBoxWrapper>
 
           <TimeElapsedBoxWrapper isRightSideElement>
             <TimeElapsedBox isRightSideElement>
               <TimeElapsedTitle>Segundos</TimeElapsedTitle>
-              <TimeElapsedCount>13</TimeElapsedCount>
+              <TimeElapsedCount>{timeElapsed.seconds}</TimeElapsedCount>
             </TimeElapsedBox>
           </TimeElapsedBoxWrapper>
         </TimeElapsedBoxPairContainer>
