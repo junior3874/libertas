@@ -30,6 +30,7 @@ export const HabitInformationText = styled.Text`
 
   color: #ffffff;
 `;
+
 export const HabitInformationLastDate = styled.Text`
   font-family: Poppins;
   font-style: normal;
@@ -40,8 +41,16 @@ export const HabitInformationLastDate = styled.Text`
   color: #6410e6;
 `;
 
-export const HabitOptionsArea = styled.View`
+export const HabitOptionsArea = styled.TouchableOpacity`
   height: 100%;
-  margin-top: -20px;
   margin-right: -5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: -20px;
+  padding-top: 20px;
+`;
+
+export const OptionsImage = styled.Image`
+  margin-right: -10px;
+  margin-top: -10px;
 `;

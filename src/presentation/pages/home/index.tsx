@@ -47,6 +47,7 @@ export default function Home() {
                   performedLastDate: new Date("2021-08-18T22:49:21+00:00"),
                 })
               }
+              onMorePress={() => navigateTo("UpdateHabit")}
             />
           </HabitWrapper>
         )}

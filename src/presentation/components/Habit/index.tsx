@@ -16,6 +16,7 @@ import {
   HabitInformationText,
   HabitInformationLastDate,
   HabitOptionsArea,
+  OptionsImage,
 } from "./styles";
 
 const Pill = require("../../assets/pill.png");
@@ -28,9 +29,15 @@ type HabitProps = {
   name: string;
   lastDate: Date;
   onPress(): void;
+  onMorePress(): void;
 };
 
-export default function Habit({ name, lastDate, onPress }: HabitProps) {
+export default function Habit({
+  name,
+  lastDate,
+  onPress,
+  onMorePress,
+}: HabitProps) {
   const getDistanceCurrentDataBetweenLastDate = intervalToDuration({
     start: lastDate,
     end: new Date(),
@@ -52,8 +59,8 @@ export default function Habit({ name, lastDate, onPress }: HabitProps) {
           <HabitInformationLastDate>{distance}</HabitInformationLastDate>
         </HabitInformationArea>
       </FlexContent>
-      <HabitOptionsArea>
-        <Image source={MoreImg} />
+      <HabitOptionsArea onPress={onMorePress}>
+        <OptionsImage source={MoreImg} />
       </HabitOptionsArea>
     </Container>
   );
