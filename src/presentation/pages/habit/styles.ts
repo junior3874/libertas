@@ -8,6 +8,7 @@ export const Container = styled.View`
 `;
 
 export const TimeElapsedContainer = styled.View`
+  margin-top: 80px;
   margin-bottom: 36px;
 `;
 

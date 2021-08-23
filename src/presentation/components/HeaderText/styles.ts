@@ -9,5 +9,4 @@ export const Subtitle = styled.Text`
   color: #ffffff;
   font-size: 14px;
   margin-top: 6px;
-  margin-bottom: 80px;
 `;
