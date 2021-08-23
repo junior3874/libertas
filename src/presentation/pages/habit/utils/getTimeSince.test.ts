@@ -2,8 +2,8 @@ import { getTimeSince } from "./getTimeSince";
 
 describe("getDaysSince util function", () => {
   it("should return time elapsed since date", () => {
-    const current = new Date("2021-08-23T22:49:21+00:00");
-    const previous = new Date("2021-08-22T22:48:20+00:00");
+    const previous = new Date("2021-08-23T22:49:21+00:00");
+    const current = new Date("2021-08-22T22:48:20+00:00");
 
     const daysSince = getTimeSince(previous, current);
 
@@ -16,8 +16,8 @@ describe("getDaysSince util function", () => {
   });
 
   it("should return time elapsed since date", () => {
-    const current = new Date("2021-08-23T22:49:21+00:00");
-    const previous = new Date("2021-07-20T22:48:20+00:00");
+    const previous = new Date("2021-08-23T22:49:21+00:00");
+    const current = new Date("2021-07-20T22:48:20+00:00");
 
     const daysSince = getTimeSince(previous, current);
 
@@ -30,8 +30,8 @@ describe("getDaysSince util function", () => {
   });
 
   it("should return time elapsed since date", () => {
-    const current = new Date("2021-08-23T22:49:21+00:00");
-    const previous = new Date("2021-08-20T14:36:01+00:00");
+    const previous = new Date("2021-08-23T22:49:21+00:00");
+    const current = new Date("2021-08-20T14:36:01+00:00");
 
     const daysSince = getTimeSince(previous, current);
 

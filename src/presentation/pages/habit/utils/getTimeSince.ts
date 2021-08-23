@@ -1,4 +1,4 @@
-type TimeSince = {
+export type TimeSince = {
   days: number;
   hours: number;
   minutes: number;
@@ -17,7 +17,7 @@ export function getTimeSince(since: Date, now = new Date()): TimeSince {
   const minutes = Math.floor(delta / 60) % 60;
   delta -= minutes * 60;
 
-  const seconds = delta % 60;
+  const seconds = Math.floor(delta % 60);
 
   return {
     days: days,
