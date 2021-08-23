@@ -7,17 +7,6 @@ export const Container = styled.View`
   padding-right: 20px;
 `;
 
-export const GoBackButton = styled.TouchableOpacity`
-  margin-top: 46px;
-  margin-bottom: 46px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-right: 20px;
-  margin-left: -6px;
-  padding-left: 6px;
-  width: 20px;
-`;
-
 export const TimeElapsedContainer = styled.View`
   margin-top: 80px;
   margin-bottom: 36px;

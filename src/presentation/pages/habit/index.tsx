@@ -1,11 +1,10 @@
 import React from "react";
-import { Image } from "react-native";
 import BtnGeneric from "../../components/btnGeneric";
+import GoBackButton from "../../components/GoBackButton";
 import HeaderText from "../../components/HeaderText";
 
 import {
   Container,
-  GoBackButton,
   TimeElapsedContainer,
   TimeElapsedBoxPairContainer,
   TimeElapsedBoxWrapper,
@@ -14,14 +13,10 @@ import {
   TimeElapsedCount,
 } from "./styles";
 
-const ChevronLeftImg = require("../../assets/chevron-left.png");
-
 export default function Habit() {
   return (
     <Container>
-      <GoBackButton>
-        <Image source={ChevronLeftImg} />
-      </GoBackButton>
+      <GoBackButton />
 
       <HeaderText.Title message="Sobre o hábito" />
       <HeaderText.Subtitle message="Há quanto tempo você está sóbrio" />
