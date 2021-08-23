@@ -9,7 +9,7 @@ import Habit from "./pages/habit";
 export type StackParamList = {
   Home: undefined;
   CreateHabit: undefined;
-  Habit: { habit: any };
+  Habit: { performedLastDate: Date };
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
