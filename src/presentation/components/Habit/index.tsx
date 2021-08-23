@@ -27,9 +27,10 @@ const MoreImg = require("../../assets/more.png");
 type HabitProps = {
   name: string;
   lastDate: Date;
+  onPress(): void;
 };
 
-export default function Habit({ name, lastDate }: HabitProps) {
+export default function Habit({ name, lastDate, onPress }: HabitProps) {
   const getDistanceCurrentDataBetweenLastDate = intervalToDuration({
     start: lastDate,
     end: new Date(),
@@ -41,14 +42,14 @@ export default function Habit({ name, lastDate }: HabitProps) {
   );
 
   return (
-    <Container>
+    <Container onPress={onPress}>
       <FlexContent>
         <ImageHabit source={Cigar} />
         <HabitInformationArea>
           <HabitInformationText>
             Você está a 5 dias sem {name}
           </HabitInformationText>
-          <HabitInformationLastDate>{`${distance}`}</HabitInformationLastDate>
+          <HabitInformationLastDate>{distance}</HabitInformationLastDate>
         </HabitInformationArea>
       </FlexContent>
       <HabitOptionsArea>
