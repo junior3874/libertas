@@ -47,7 +47,7 @@ type FormLabel = {
 };
 
 type FormWrapper = {
-  children: React.ReactChildren;
+  children: React.ReactElement;
 };
 
 type FormDate = {
