@@ -1,10 +1,13 @@
 import { RouteProp, useIsFocused, useRoute } from "@react-navigation/native";
 import React from "react";
+import { useCallback } from "react";
+import { useContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import BtnGeneric from "../../components/btnGeneric";
 import GoBackButton from "../../components/GoBackButton";
 import HeaderText from "../../components/HeaderText";
+import { HabitContext } from "../../context/habit";
 import { StackParamList } from "../../routes";
 
 import {
@@ -21,8 +24,13 @@ import { getTimeSince, TimeSince } from "./utils/getTimeSince";
 let callFunctionToGetTimeElapsedInterval: any = null;
 
 export default function Habit() {
+  const { updateHabit, showHabit } = useContext(HabitContext);
   const isFocused = useIsFocused();
   const route = useRoute<RouteProp<StackParamList, "Habit">>();
+  const [habit, setHabit] = useState({
+    name: route.params.name,
+    performedLastDate: route.params.performedLastDate,
+  });
   const [timeElapsed, setTimeElapsed] = useState<TimeSince>({
     days: 0,
     hours: 0,
@@ -30,10 +38,23 @@ export default function Habit() {
     seconds: 0,
   });
 
+  const fetchHabit = useCallback(async () => {
+    if (route.params.name) {
+      const habit = await showHabit(route.params.name);
+      setHabit(habit);
+    }
+  }, [route, showHabit]);
+
+  useEffect(() => {
+    (async () => {
+      await fetchHabit();
+    })();
+  }, [habit]);
+
   useEffect(() => {
     clearInterval(callFunctionToGetTimeElapsedInterval);
 
-    const { performedLastDate } = route.params;
+    const { performedLastDate } = habit;
     if (performedLastDate) {
       setTimeElapsed(getTimeSince(performedLastDate));
       callFunctionToGetTimeElapsedInterval = setInterval(
@@ -41,13 +62,21 @@ export default function Habit() {
         1000
       );
     }
-  }, [route]);
+  }, [habit]);
 
   useEffect(() => {
     if (!isFocused) {
       clearInterval(callFunctionToGetTimeElapsedInterval);
     }
   }, [isFocused]);
+
+  async function resetTimer() {
+    const { name } = route.params;
+    await updateHabit({
+      currentName: name,
+      performedLastDate: new Date(),
+    });
+  }
 
   return (
     <Container>
@@ -92,7 +121,7 @@ export default function Habit() {
 
       <BtnGeneric
         title="Resetar tempo"
-        onPress={() => {}}
+        onPress={resetTimer}
         backgroundColor="#6410E6"
       />
     </Container>
