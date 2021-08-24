@@ -10,3 +10,8 @@ export const Container = styled.TouchableOpacity`
 export const FormWrapper = styled.View`
   margin-top: 80px;
 `;
+
+export const EditButtonWrapper = styled.View`
+  margin-top: 60px;
+  margin-bottom: 16px;
+`;
