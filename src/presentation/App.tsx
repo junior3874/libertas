@@ -4,6 +4,7 @@ import Routes from "./routes";
 import { StatusBar } from "expo-status-bar";
 import Toast from "react-native-toast-message";
 import { HabitProvider } from "./context/habit";
+import toastConfig from "./lib/toastConfig";
 
 export default function App() {
   return (
@@ -12,7 +13,7 @@ export default function App() {
       <HabitProvider>
         <Routes />
       </HabitProvider>
-      <Toast ref={(ref: any) => Toast.setRef(ref)} />
+      <Toast config={toastConfig} ref={(ref: any) => Toast.setRef(ref)} />
     </>
   );
 }
