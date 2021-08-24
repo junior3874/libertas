@@ -5,9 +5,14 @@ import { asyncStorageKeys } from "./lib/asyncStorageKeys";
 
 class IndexHabitAsyncStorageRepository implements IIndexHabitRepository {
   async index(): Promise<Habit[]> {
-    const habits: Habit[] = JSON.parse(
+    let habits: Habit[] = JSON.parse(
       (await AsyncStorage.getItem(asyncStorageKeys.habit)) || "[]"
     );
+
+    habits = habits.map((h) => ({
+      ...h,
+      performedLastDate: new Date(h.performedLastDate),
+    }));
 
     return habits;
   }
