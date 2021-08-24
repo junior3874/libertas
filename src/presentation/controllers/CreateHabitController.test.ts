@@ -3,6 +3,7 @@ import { CreateHabitUseCase } from "../../useCases";
 import { CreateHabitDTO } from "../../useCases/DTOs";
 import { HabitAlreadyExistsError } from "../../useCases/errors";
 import { CreateHabitController } from "./CreateHabitController";
+import { ResponseWithHabit } from "./type-defs";
 
 function makeSut() {
   const createHabitUseCaseMock = mock<CreateHabitUseCase>();
@@ -55,5 +56,15 @@ describe("Create Habit controller", () => {
     const response = await sut.handle(newHabit);
 
     expect(response.error!.message).toBe("Habit couldn't be created");
+  });
+
+  it("should return ResponseWithHabit with MissingParamsError", async () => {
+    const { sut, createHabitUseCaseMock } = makeSut();
+    const habitToBeCreated = { name: "", performedLastDate: new Date() };
+    createHabitUseCaseMock.create.mockResolvedValueOnce(habitToBeCreated);
+
+    const response: ResponseWithHabit = await sut.handle(habitToBeCreated);
+
+    expect(response.error!.message).toBe("You need to specify: habit name");
   });
 });

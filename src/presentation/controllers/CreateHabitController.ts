@@ -2,7 +2,7 @@ import { CreateHabitUseCase } from "../../useCases";
 import { CreateHabitDTO } from "../../useCases/DTOs";
 import { HabitAlreadyExistsError } from "../../useCases/errors";
 import { ResponseWithHabit } from "./type-defs";
-
+import { MissingParamsError } from "../errors";
 export class CreateHabitController {
   public constructor(private useCase: CreateHabitUseCase) {}
 
@@ -11,6 +11,13 @@ export class CreateHabitController {
     performedLastDate,
   }: CreateHabitDTO): Promise<ResponseWithHabit> {
     try {
+      if (!name) {
+        const error = new MissingParamsError(["habit name"]);
+        return {
+          error: { instance: error, message: error.message },
+          habit: null,
+        };
+      }
       const habit = await this.useCase.create({ name, performedLastDate });
 
       return { error: null, habit };
