@@ -6,6 +6,7 @@ import Home from "./pages/home";
 import CreateHabit from "./pages/createHabit";
 import Habit from "./pages/habit";
 import UpdateHabit from "./pages/updateHabit";
+import { UpdateHabitDTO } from "../useCases/DTOs";
 
 type HabitDTO = {
   name: string;
@@ -15,7 +16,7 @@ type HabitDTO = {
 export type StackParamList = {
   Home: undefined;
   CreateHabit: undefined;
-  UpdateHabit: undefined;
+  UpdateHabit: UpdateHabitDTO;
   Habit: HabitDTO;
 };
 

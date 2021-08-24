@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { View, Keyboard } from "react-native";
 
-import { Container, FormWrapper } from "./styles";
+import { HabitContext } from "../../context/habit";
 
 import Form from "../../components/Form";
 import HeaderText from "../../components/HeaderText";
 import GoBackButton from "../../components/GoBackButton";
 import BtnGeneric from "../../components/btnGeneric";
-import { View } from "react-native";
+
+import { Container, FormWrapper } from "./styles";
+import { useNavigation } from "@react-navigation/native";
 
 const MoreImg = require("../../assets/more.png");
 
 export default function CreateHabit({}) {
+  const navigation = useNavigation();
+  const { addHabit } = useContext(HabitContext);
   const optionsTesting = [
     {
       img: MoreImg,
@@ -23,9 +28,23 @@ export default function CreateHabit({}) {
   ];
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [name, setName] = useState("");
+
+  const onCreateHabit = async () => {
+    await addHabit({
+      name,
+      performedLastDate: new Date(),
+    });
+    navigation.goBack();
+  };
 
   return (
-    <Container onPress={() => setIsDropdownOpen(false)}>
+    <Container
+      onPress={() => {
+        setIsDropdownOpen(false);
+      }}
+      activeOpacity={1}
+    >
       <GoBackButton />
 
       <HeaderText.Title message="Criar novo hábito" />
@@ -40,7 +59,7 @@ export default function CreateHabit({}) {
             isDropdownOpen={isDropdownOpen}
             onDropdownOpen={() => setIsDropdownOpen(true)}
             onDropdownClose={() => setIsDropdownOpen(false)}
-            onSelectedOptionChange={(event) => console.log(event)}
+            onSelectedOptionChange={(event) => setName(event)}
           />
         </Form.DropdownWrapper>
 
@@ -54,7 +73,7 @@ export default function CreateHabit({}) {
       <BtnGeneric
         title="Criar novo hábito"
         backgroundColor="#6410E6"
-        onPress={() => {}}
+        onPress={() => onCreateHabit()}
       />
     </Container>
   );

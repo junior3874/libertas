@@ -38,7 +38,13 @@ export default function Home() {
               name={habit.name}
               lastDate={habit.performedLastDate}
               onPress={() => navigateTo("Habit", habit)}
-              onMorePress={() => navigateTo("UpdateHabit")}
+              onMorePress={() =>
+                navigateTo("UpdateHabit", {
+                  currentName: habit.name,
+                  newName: habit.name,
+                  performedLastDate: habit.performedLastDate,
+                })
+              }
             />
           </HabitWrapper>
         )}
