@@ -7,11 +7,16 @@ import CreateHabit from "./pages/createHabit";
 import Habit from "./pages/habit";
 import UpdateHabit from "./pages/updateHabit";
 
+type HabitDTO = {
+  name: string;
+  performedLastDate: Date;
+};
+
 export type StackParamList = {
   Home: undefined;
   CreateHabit: undefined;
   UpdateHabit: undefined;
-  Habit: { performedLastDate: Date };
+  Habit: HabitDTO;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
