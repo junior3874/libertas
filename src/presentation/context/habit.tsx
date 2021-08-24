@@ -18,9 +18,9 @@ const showHabitController = makeControllers.makeShowHabitController();
 
 type HabitContextProps = {
   habits: Habit[];
-  addHabit: (habit: Habit) => void;
-  updateHabit: (data: UpdateHabitDTO) => void;
-  removeHabit: (name: string) => void;
+  addHabit: (habit: Habit) => Promise<void>;
+  updateHabit: (data: UpdateHabitDTO) => Promise<void>;
+  removeHabit: (name: string) => Promise<void>;
   showHabit: (name: string) => Promise<Habit>;
 };
 
