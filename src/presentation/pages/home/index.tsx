@@ -33,7 +33,7 @@ export default function Home() {
         data={habits}
         keyExtractor={(habit) => habit.name}
         renderItem={({ item: habit, index }: { item: any; index: number }) => (
-          <HabitWrapper lastHabit={index === habits.length}>
+          <HabitWrapper lastHabit={index === habits.length - 1}>
             <Habit
               name={habit.name}
               lastDate={habit.performedLastDate}
