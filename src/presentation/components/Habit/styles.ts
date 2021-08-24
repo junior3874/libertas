@@ -12,12 +12,14 @@ export const Container = styled.TouchableOpacity`
 export const FlexContent = styled.View`
   flex-direction: row;
   align-items: center;
+  flex-shrink: 1;
 `;
 
 export const ImageHabit = styled.Image``;
 
 export const HabitInformationArea = styled.View`
   margin-left: 16px;
+  margin-right: 16px;
 `;
 
 export const HabitInformationText = styled.Text`
@@ -43,14 +45,7 @@ export const HabitInformationLastDate = styled.Text`
 
 export const HabitOptionsArea = styled.TouchableOpacity`
   height: 100%;
-  margin-right: -5px;
+  margin-left: 20px;
   padding-left: 20px;
   padding-right: 20px;
-  margin-top: -20px;
-  padding-top: 20px;
-`;
-
-export const OptionsImage = styled.Image`
-  margin-right: -10px;
-  margin-top: -10px;
 `;

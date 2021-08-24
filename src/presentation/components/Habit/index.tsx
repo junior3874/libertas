@@ -16,7 +16,6 @@ import {
   HabitInformationText,
   HabitInformationLastDate,
   HabitOptionsArea,
-  OptionsImage,
 } from "./styles";
 
 const Pill = require("../../assets/pill.png");
@@ -60,7 +59,7 @@ export default function Habit({
         </HabitInformationArea>
       </FlexContent>
       <HabitOptionsArea onPress={onMorePress}>
-        <OptionsImage source={MoreImg} />
+        <Image source={MoreImg} />
       </HabitOptionsArea>
     </Container>
   );
