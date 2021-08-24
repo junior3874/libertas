@@ -9,10 +9,19 @@ export const Container = styled.TouchableOpacity`
   border-radius: 3px;
 `;
 
-export const ImageHabitArea = styled.View``;
+export const FlexContent = styled.View`
+  flex-direction: row;
+  align-items: center;
+  flex-shrink: 1;
+`;
+
 export const ImageHabit = styled.Image``;
 
-export const HabitInformationArea = styled.View``;
+export const HabitInformationArea = styled.View`
+  margin-left: 16px;
+  margin-right: 16px;
+`;
+
 export const HabitInformationText = styled.Text`
   margin-bottom: 5px;
   font-family: Poppins;
@@ -23,6 +32,7 @@ export const HabitInformationText = styled.Text`
 
   color: #ffffff;
 `;
+
 export const HabitInformationLastDate = styled.Text`
   font-family: Poppins;
   font-style: normal;
@@ -30,14 +40,12 @@ export const HabitInformationLastDate = styled.Text`
   font-size: 16px;
   line-height: 24px;
 
-  /* identical to box height */
-
   color: #6410e6;
 `;
 
-export const HabitOptionsArea = styled.View`
+export const HabitOptionsArea = styled.TouchableOpacity`
   height: 100%;
-  margin-top: -20px;
-  margin-right: -5px;
+  margin-left: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
-export const HabitOptionsImage = styled.Image``;

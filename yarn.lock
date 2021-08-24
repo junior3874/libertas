@@ -1611,7 +1611,7 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@react-native-async-storage/async-storage@^1.13.0":
+"@react-native-async-storage/async-storage@~1.15.0":
   version "1.15.6"
   resolved "https://registry.yarnpkg.com/@react-native-async-storage/async-storage/-/async-storage-1.15.6.tgz#a4fd461d2d891326e006d2284d060229f6c2b328"
   integrity sha512-kVfy6O5Xbce9GfD9Islxn5JaOczNz6dF3Ce/7tP4foVLPNwo7UfdgXeKZ7iac07ZbvDvViSUuNyzzrN81FgqkQ==
@@ -6233,6 +6233,13 @@ react-native-screens@~3.4.0:
   integrity sha512-cg+q9MRnVdeOcJyvJtqffoXLur/C2wHA/7IO2+FAipzTlgHbbM1mTuSM7qG+SeiQjoIs4mHOEf7A0ziPKW04sA==
   dependencies:
     warn-once "^0.1.0"
+
+react-native-toast-message@^1.4.9:
+  version "1.4.9"
+  resolved "https://registry.yarnpkg.com/react-native-toast-message/-/react-native-toast-message-1.4.9.tgz#47f33ac312fe2aee5dbdd4ae14745fa0d354102e"
+  integrity sha512-QhHzzsiymKpHEWz2nUKQjQMRuGN+/a8cOwDXJcz3TQFY03p20f6sJW9JKw3KkMfvWiUhGbApCPpNU6tHaAZ32w==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-native-web@~0.13.12:
   version "0.13.18"
