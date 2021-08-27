@@ -20,8 +20,17 @@ const PatternsImg = require("../../assets/patterns.png");
 const PlusImg = require("../../assets/plus.png");
 
 export default function Home() {
-  const { habits } = useContext(HabitContext);
   const navigation = useNavigation();
+
+  //==================================================================
+  // Handlers
+  //==================================================================
+
+  const { habits } = useContext(HabitContext);
+
+  //==================================================================
+  // Handlers
+  //==================================================================
 
   function navigateTo(pageName: string, params = {}): void {
     navigation.navigate(pageName as never, params as never);
