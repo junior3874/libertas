@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { View, Keyboard } from "react-native";
+import React, { useState, useContext, useRef } from "react";
+import { View, Keyboard, Animated, TouchableOpacity } from "react-native";
 
 import { HabitContext } from "../../context/habit";
 
@@ -10,38 +10,49 @@ import BtnGeneric from "../../components/btnGeneric";
 
 import { Container, FormWrapper } from "./styles";
 import { useNavigation } from "@react-navigation/native";
-
-const MoreImg = require("../../assets/more.png");
+import { defaultHabitOptions } from "../../lib/defaultHabits";
 
 export default function CreateHabit({}) {
   const navigation = useNavigation();
+
+  //==================================================================
+  // Context
+  //==================================================================
+
   const { addHabit } = useContext(HabitContext);
-  const optionsTesting = [
-    {
-      img: MoreImg,
-      title: "Pare de fumar",
-    },
-    {
-      img: MoreImg,
-      title: "Pare de tomar guaravita",
-    },
-  ];
+
+  //==================================================================
+  // States
+  //==================================================================
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [name, setName] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [calendarVisible, setCalendarVisible] = useState(false);
+
+  //==================================================================
+  // Handlers
+  //==================================================================
 
   const onCreateHabit = async () => {
     await addHabit({
       name,
-      performedLastDate: new Date(),
+      performedLastDate: date,
     });
     navigation.goBack();
+  };
+
+  const setNewDate = (date: Date) => setDate(date);
+  const closeCalendar = () => setCalendarVisible(false);
+  const openCalendar = () => {
+    setCalendarVisible(true);
   };
 
   return (
     <Container
       onPress={() => {
         setIsDropdownOpen(false);
+        Keyboard.dismiss();
       }}
       activeOpacity={1}
     >
@@ -55,18 +66,26 @@ export default function CreateHabit({}) {
         <Form.DropdownWrapper>
           <Form.Dropdown
             title="Selecione um hábito"
-            options={optionsTesting}
+            options={defaultHabitOptions}
             isDropdownOpen={isDropdownOpen}
             onDropdownOpen={() => setIsDropdownOpen(true)}
             onDropdownClose={() => setIsDropdownOpen(false)}
             onSelectedOptionChange={(event) => setName(event)}
+            option={name}
           />
         </Form.DropdownWrapper>
 
         <View style={{ height: 36 }} />
 
         <Form.Label message="Última vez que você se rendeu a este hábito" />
-        <Form.DateInput onPress={() => {}} value="" />
+
+        <Form.DateInput
+          onPress={openCalendar}
+          value={date}
+          setLastDate={setNewDate}
+          visible={calendarVisible}
+          setIsVisible={closeCalendar}
+        />
       </FormWrapper>
 
       <View style={{ height: 60 }} />
