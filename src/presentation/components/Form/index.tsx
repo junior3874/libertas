@@ -1,12 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  Animated,
-  Modal,
-  View,
-  TouchableOpacity,
-  UIManager,
-  findNodeHandle,
-} from "react-native";
+import { Animated, Keyboard } from "react-native";
+import { format } from "date-fns";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 import {
   Container,
@@ -20,7 +15,6 @@ import {
   PersonalizedOptionInput,
   PersonalizedOptionCloseArea,
   PersonalizedOptionCloseImg,
-  ModalPressable,
 } from "./styles";
 
 import OptionInDropdown from "../OptionInDropdown";
@@ -29,17 +23,16 @@ const OtherImg = require("../../assets/other.png");
 const XCircle = require("../../assets/x-circle.png");
 
 type FormWitDropdown = {
-  options: [
-    {
-      img: any;
-      title: string;
-    }
-  ];
+  options: {
+    img: any;
+    title: string;
+  }[];
   title: string;
   isDropdownOpen: boolean;
   onDropdownOpen: () => void;
   onDropdownClose: () => void;
   onSelectedOptionChange: (option: string) => void;
+  option: string;
 };
 
 type FormLabel = {
@@ -51,8 +44,11 @@ type FormWrapper = {
 };
 
 type FormDate = {
+  value: Date;
+  setLastDate: (date: Date) => void;
+  visible: boolean;
+  setIsVisible: () => void;
   onPress: () => void;
-  value: string;
 };
 
 const Form = {
@@ -63,28 +59,51 @@ const Form = {
     onDropdownOpen,
     onDropdownClose,
     onSelectedOptionChange,
+    option,
   }: FormWitDropdown) {
-    const [selectedOption, setSelectedOption] = useState(title);
+    //==================================================================
+    // States
+    //==================================================================
+
     const [personalizedOption, setPersonalizedOption] = useState(false);
-    const [dropdownIsVisible, setDropdownIsVisible] = useState(isDropdownOpen);
+    const [dropdownVisible, setDropdownVisible] = useState(false);
+
+    //==================================================================
+    // Refs
+    //==================================================================
+
     const dropdownAnimation = useRef(new Animated.Value(-100)).current;
 
-    useEffect(() => {
-      if (isDropdownOpen) {
-        openDropdown();
-      } else {
-        closeDropdown();
-      }
-    }, [isDropdownOpen]);
+    //==================================================================
+    // Handlers
+    //==================================================================
 
-    useEffect(() => {
-      if (selectedOption) {
-        onSelectedOptionChange(selectedOption);
-      }
-    }, [selectedOption]);
+    const setNewSelectedOption = (name: string) => {
+      onDropdownClose();
+      onSelectedOptionChange(name);
+    };
+
+    const addedPersonalizedOption = () => {
+      onDropdownClose();
+      setPersonalizedOption(true);
+      onSelectedOptionChange("");
+    };
+
+    const cancelPersonalizedOption = () => {
+      setPersonalizedOption(false);
+      onSelectedOptionChange("");
+    };
+
+    const dropdownOpenOrCloseProxy = () => {
+      if (isDropdownOpen) return closeDropdown();
+      onDropdownOpen();
+    };
+
+    //==================================================================
+    // Animations
+    //==================================================================
 
     const openDropdown = () => {
-      setDropdownIsVisible(true);
       Animated.timing(dropdownAnimation, {
         toValue: 0,
         duration: 400,
@@ -98,48 +117,42 @@ const Form = {
         duration: 400,
         useNativeDriver: true,
       }).start(() => {
-        setDropdownIsVisible(false);
+        setDropdownVisible(false);
         onDropdownClose();
       });
     };
 
-    const setNewSelectedOption = (name: string) => {
-      onDropdownClose();
-      setSelectedOption(name);
-    };
+    //==================================================================
+    // Hooks
+    //==================================================================
 
-    const addedPersonalizedOption = () => {
-      onDropdownClose();
-      setPersonalizedOption(true);
-    };
-
-    const cancelPersonalizedOption = () => {
-      setPersonalizedOption(false);
-    };
-
-    const dropdownOpenOrCloseProxy = () => {
-      if (isDropdownOpen) return closeDropdown();
-      onDropdownOpen();
-    };
-
+    useEffect(() => {
+      if (isDropdownOpen) {
+        setDropdownVisible(true);
+        openDropdown();
+      } else {
+        closeDropdown();
+      }
+    }, [isDropdownOpen]);
     return (
       <Container>
         <TitleArea onPress={dropdownOpenOrCloseProxy} activeOpacity={1}>
-          {personalizedOption ? (
+          {!personalizedOption ? (
+            <TitleName>{option || "Selecione um hábito"}</TitleName>
+          ) : (
             <PersonalizedOptionArea>
               <PersonalizedOptionInput
-                onChangeText={(text) => setSelectedOption(text)}
+                onChangeText={(text) => onSelectedOptionChange(text)}
                 autoFocus={true}
               />
+
               <PersonalizedOptionCloseArea onPress={cancelPersonalizedOption}>
                 <PersonalizedOptionCloseImg source={XCircle} />
               </PersonalizedOptionCloseArea>
             </PersonalizedOptionArea>
-          ) : (
-            <TitleName>{selectedOption}</TitleName>
           )}
         </TitleArea>
-        {dropdownIsVisible && (
+        {dropdownVisible && (
           <DropdownArea
             style={{
               translateY: dropdownAnimation,
@@ -165,10 +178,33 @@ const Form = {
   Label({ message }: FormLabel) {
     return <LabelTitle>{message}</LabelTitle>;
   },
-  DateInput({ onPress, value }: FormDate) {
+  DateInput({ value, setLastDate, visible, setIsVisible, onPress }: FormDate) {
+    const [selectedValue, setSelectedValue] = useState(false);
+
+    const onChange = (_: any, selectedDate: Date | undefined) => {
+      const currentDate = selectedDate || value;
+      setLastDate(currentDate);
+      setIsVisible();
+      setSelectedValue(true);
+    };
+
+    const formatedValue = format(value, "dd/MM/yyyy");
+
     return (
-      <TitleArea>
-        <TitleName>{value || "Dia / Mês / Ano"} </TitleName>
+      <TitleArea onPress={onPress}>
+        <TitleName>
+          {selectedValue ? formatedValue : "Dia / Mês / Ano"}{" "}
+        </TitleName>
+        {visible && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={value}
+            mode="date"
+            is24Hour={true}
+            display="default"
+            onChange={onChange}
+          />
+        )}
       </TitleArea>
     );
   },

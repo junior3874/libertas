@@ -59,18 +59,24 @@ export const LabelTitle = styled.Text`
 `;
 
 export const PersonalizedOptionArea = styled.View`
-  padding: 0 15px;
   flex-direction: row;
   flex: 1;
   align-items: center;
 `;
-export const PersonalizedOptionCloseArea = styled.TouchableOpacity``;
+export const PersonalizedOptionCloseArea = styled.TouchableOpacity`
+  position: absolute;
+  right: 5px;
+`;
 export const PersonalizedOptionCloseImg = styled.Image``;
 
 export const PersonalizedOptionInput = styled.TextInput`
   flex: 1;
+  height: 100%;
   width: 100%;
+  justify-content: center;
   color: white;
+  background-color: yellow;
+  padding: 0 15px;
 `;
 
 export const ModalPressable = styled.Pressable``;
