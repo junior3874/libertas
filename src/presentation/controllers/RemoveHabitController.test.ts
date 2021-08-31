@@ -39,6 +39,6 @@ describe("Remove Habit controller", () => {
 
     const response = await sut.handle("My non-existent habit");
 
-    expect(response.error!.message).toBe("Habit couldn't be deleted");
+    expect(response.message).toBe("Habit couldn't be deleted");
   });
 });

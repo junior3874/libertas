@@ -55,7 +55,7 @@ describe("Create Habit controller", () => {
 
     const response = await sut.handle(newHabit);
 
-    expect(response.error!.message).toBe("Habit couldn't be created");
+    expect(response.message).toBe("Habit couldn't be created");
   });
 
   it("should return ResponseWithHabit with MissingParamsError", async () => {
@@ -65,6 +65,6 @@ describe("Create Habit controller", () => {
 
     const response: ResponseWithHabit = await sut.handle(habitToBeCreated);
 
-    expect(response.error!.message).toBe("You need to specify: habit name");
+    expect(response.message).toBe("You need to specify: habit name");
   });
 });

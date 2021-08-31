@@ -18,7 +18,8 @@ export class UpdateHabitController {
     if (!currentName) {
       const error = new MissingParamsError(["current name"]);
       return {
-        error: { instance: error, message: error.message },
+        message: error.message,
+        error: { instance: error },
         habit: null,
       };
     }
@@ -26,7 +27,8 @@ export class UpdateHabitController {
     if (!newName && !performedLastDate) {
       const error = new MissingParamsError(["name", "date"]);
       return {
-        error: { instance: error, message: error.message },
+        message: error.message,
+        error: { instance: error },
         habit: null,
       };
     }
@@ -34,7 +36,8 @@ export class UpdateHabitController {
     if (currentName === newName) {
       const error = new NewNameIsEqualToOldOneError();
       return {
-        error: { instance: error, message: error.message },
+        message: error.message,
+        error: { instance: error },
         habit: null,
       };
     }
@@ -45,19 +48,19 @@ export class UpdateHabitController {
         newName,
         performedLastDate,
       });
-      return { error: null, habit };
+      return { message: "Habit updated successfully", error: null, habit };
     } catch (err) {
       if (
         err instanceof NoHabitFoundError ||
         err instanceof HabitAlreadyExistsError
       ) {
-        return { error: { instance: err, message: err.message }, habit: null };
+        return { message: err.message, error: { instance: err }, habit: null };
       }
 
       return {
+        message: "Habit couldn't be updated",
         error: {
           instance: err,
-          message: "Habit couldn't be updated",
         },
         habit: null,
       };

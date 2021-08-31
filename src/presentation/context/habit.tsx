@@ -61,6 +61,7 @@ export const HabitProvider: React.FC = ({ children }) => {
     const response = await createHabitController.handle(habit);
 
     handleError(response);
+    showToastMessage(response.message, !response.error);
 
     if (!response.error) {
       await indexHabit();
@@ -73,6 +74,7 @@ export const HabitProvider: React.FC = ({ children }) => {
     const response = await updateHabitController.handle(data);
 
     handleError(response);
+    showToastMessage(response.message, !response.error);
 
     if (!response.error) {
       await indexHabit();
@@ -83,6 +85,7 @@ export const HabitProvider: React.FC = ({ children }) => {
     const response = await removeHabitController.handle(name);
 
     handleError(response);
+    showToastMessage(response.message, !response.error);
 
     if (!response.error) {
       await indexHabit();
@@ -99,11 +102,15 @@ export const HabitProvider: React.FC = ({ children }) => {
 
   function handleError(responseError: BaseResponse): void {
     if (responseError.error) {
-      setError({ error: true, errorMessage: responseError.error.message });
-      toasts.showError(responseError.error.message);
+      setError({ error: true, errorMessage: responseError.message });
     } else {
       setError({ error: false, errorMessage: null });
     }
+  }
+
+  function showToastMessage(message: string, success: boolean) {
+    if (success) toasts.showSuccess(message);
+    if (!success) toasts.showError(message);
   }
 
   return (

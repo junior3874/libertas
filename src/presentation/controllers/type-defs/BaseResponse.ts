@@ -1,6 +1,6 @@
 export type BaseResponse = {
+  message: string;
   error: {
     instance: Error;
-    message: string;
   } | null;
 };
