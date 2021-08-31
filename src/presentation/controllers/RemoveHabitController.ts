@@ -9,18 +9,18 @@ export class RemoveHabitController {
     try {
       await this.useCase.remove(name);
 
-      return { error: null };
+      return { message: "Habit removed successfully", error: null };
     } catch (err) {
       if (err instanceof NoHabitFoundError) {
         return {
+          message: err.message,
           error: {
             instance: err,
-            message: err.message,
           },
         };
       }
 
-      return { error: { instance: err, message: "Habit couldn't be deleted" } };
+      return { message: "Habit couldn't be deleted", error: { instance: err } };
     }
   }
 }

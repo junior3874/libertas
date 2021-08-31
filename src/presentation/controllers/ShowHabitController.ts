@@ -8,16 +8,16 @@ export class ShowHabitController {
   async handle(name: string): Promise<ResponseWithHabit> {
     try {
       const habit = await this.useCase.show(name);
-      return { error: null, habit };
+      return { message: "Habit loaded successfully", error: null, habit };
     } catch (err) {
       if (err instanceof NoHabitFoundError) {
-        return { error: { instance: err, message: err.message }, habit: null };
+        return { message: err.message, error: { instance: err }, habit: null };
       }
 
       return {
+        message: "Habit couldn't be found",
         error: {
           instance: err,
-          message: "Habit couldn't be found",
         },
         habit: null,
       };

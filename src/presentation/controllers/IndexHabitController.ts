@@ -9,16 +9,20 @@ export class IndexHabitController {
     try {
       const habits = await this.useCase.index();
 
-      return { error: null, habits };
+      return { message: "Habits loaded successfully", error: null, habits };
     } catch (err) {
       if (err instanceof NoHabitFoundError) {
-        return { error: null, habits: [] };
+        return {
+          message: "Habits loaded successfully",
+          error: null,
+          habits: [],
+        };
       }
 
       return {
+        message: "Habits couldn't be loaded",
         error: {
           instance: err,
-          message: "Habits couldn't be loaded",
         },
         habits: null,
       };

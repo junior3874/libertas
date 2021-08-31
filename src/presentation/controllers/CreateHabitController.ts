@@ -14,20 +14,22 @@ export class CreateHabitController {
       if (!name) {
         const error = new MissingParamsError(["habit name"]);
         return {
-          error: { instance: error, message: error.message },
+          message: error.message,
+          error: { instance: error },
           habit: null,
         };
       }
       const habit = await this.useCase.create({ name, performedLastDate });
 
-      return { error: null, habit };
+      return { message: "Habit created successfully", error: null, habit };
     } catch (err) {
       if (err instanceof HabitAlreadyExistsError) {
-        return { error: { instance: err, message: err.message }, habit: null };
+        return { message: err.message, error: { instance: err }, habit: null };
       }
 
       return {
-        error: { instance: err, message: "Habit couldn't be created" },
+        message: "Habit couldn't be created",
+        error: { instance: err },
         habit: null,
       };
     }

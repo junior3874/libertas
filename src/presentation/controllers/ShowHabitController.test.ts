@@ -45,6 +45,6 @@ describe("Show Habit controller", () => {
       "My non-existent habit"
     );
 
-    expect(response.error!.message).toBe("Habit couldn't be found");
+    expect(response.message).toBe("Habit couldn't be found");
   });
 });

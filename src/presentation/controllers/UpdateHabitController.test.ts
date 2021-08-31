@@ -42,7 +42,7 @@ describe("Update Habit controller", () => {
       performedLastDate: new Date(),
     });
 
-    expect(response.error!.message).toBe("Habit couldn't be updated");
+    expect(response.message).toBe("Habit couldn't be updated");
   });
 
   it("should return ResponseWithHabit with HabitNotFoundError", async () => {
@@ -103,7 +103,7 @@ describe("Update Habit controller", () => {
       newUpdatedHabit as UpdateHabitDTO
     );
 
-    expect(response.error!.message).toBe("You need to specify: current name");
+    expect(response.message).toBe("You need to specify: current name");
   });
 
   it("should return ResponseWithHabit with MissingParamsError", async () => {
@@ -114,6 +114,6 @@ describe("Update Habit controller", () => {
 
     const response: ResponseWithHabit = await sut.handle(newUpdatedHabit);
 
-    expect(response.error!.message).toBe("You need to specify: name, date");
+    expect(response.message).toBe("You need to specify: name, date");
   });
 });
