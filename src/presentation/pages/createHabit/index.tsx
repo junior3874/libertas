@@ -35,11 +35,13 @@ export default function CreateHabit({}) {
   //==================================================================
 
   const onCreateHabit = async () => {
-    await addHabit({
+    const response = await addHabit({
       name,
       performedLastDate: date,
     });
-    navigation.goBack();
+    if (!response.error) {
+      navigation.goBack();
+    }
   };
 
   const setNewDate = (date: Date) => setDate(date);

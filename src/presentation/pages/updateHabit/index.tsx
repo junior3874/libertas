@@ -36,12 +36,15 @@ export default function UpdateHabit() {
   //==================================================================
 
   async function onUpdateHabit() {
-    await updateHabit({
+    const response = await updateHabit({
       currentName: route.params.currentName,
       newName: name,
       performedLastDate: lastDate,
     });
-    navigation.goBack();
+
+    if (!response.error) {
+      navigation.goBack();
+    }
   }
 
   async function onRemoveHabit() {

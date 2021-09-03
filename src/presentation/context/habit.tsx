@@ -16,26 +16,27 @@ const removeHabitController = makeControllers.makeRemoveHabitController();
 const updateHabitController = makeControllers.makeUpdateHabitController();
 const showHabitController = makeControllers.makeShowHabitController();
 
+type ResponseError = {
+  error: boolean;
+  errorMessage: string | null;
+};
+
 type HabitContextProps = {
   habits: Habit[];
-  addHabit: (habit: Habit) => Promise<void>;
-  updateHabit: (data: UpdateHabitDTO) => Promise<void>;
+  addHabit: (habit: CreateHabitDTO) => Promise<ResponseError>;
+  updateHabit: (data: UpdateHabitDTO) => Promise<ResponseError>;
   removeHabit: (name: string) => Promise<void>;
   showHabit: (name: string) => Promise<Habit>;
 };
 
 export const HabitContext = createContext({} as HabitContextProps);
 
-type ResponseError = {
-  error: boolean;
-  errorMessage: string | null;
-};
-
 export const HabitProvider: React.FC = ({ children }) => {
   const [error, setError] = useState<ResponseError>({
     error: false,
     errorMessage: null,
   });
+
   const [loadingRequest, setLoadingRequest] = useState(false);
   const [habits, setHabits] = useState<Habit[]>([]);
 
@@ -59,15 +60,15 @@ export const HabitProvider: React.FC = ({ children }) => {
     setLoadingRequest(true);
 
     const response = await createHabitController.handle(habit);
-
     handleError(response);
     showToastMessage(response.message, !response.error);
 
     if (!response.error) {
       await indexHabit();
     }
-
     setLoadingRequest(false);
+
+    return error;
   };
 
   const updateHabit = async (data: UpdateHabitDTO) => {
@@ -79,6 +80,7 @@ export const HabitProvider: React.FC = ({ children }) => {
     if (!response.error) {
       await indexHabit();
     }
+    return error;
   };
 
   const removeHabit = async (name: string) => {
