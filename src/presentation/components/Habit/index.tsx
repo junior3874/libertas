@@ -17,6 +17,7 @@ import {
   HabitInformationLastDate,
   HabitOptionsArea,
 } from "./styles";
+import { defaultHabitOptions } from "../../lib/defaultHabits";
 
 const Pill = require("../../assets/pill.png");
 const Cigar = require("../../assets/cigar.png");
@@ -47,13 +48,16 @@ export default function Habit({
     { locale: ptBR }
   );
 
+  const image =
+    defaultHabitOptions.find((element) => element.title == name)?.img || Other;
+
   return (
     <Container onPress={onPress}>
       <FlexContent>
-        <ImageHabit source={Cigar} />
+        <ImageHabit source={image} />
         <HabitInformationArea>
           <HabitInformationText>
-            Você está a 5 dias sem {name}
+            Você está livre de {name} há
           </HabitInformationText>
           <HabitInformationLastDate>{distance}</HabitInformationLastDate>
         </HabitInformationArea>
