@@ -28,6 +28,7 @@ export default function CreateHabit({}) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [name, setName] = useState("");
   const [date, setDate] = useState(new Date());
+  const [lastDate, setLastDate] = useState<Date>();
   const [calendarVisible, setCalendarVisible] = useState(false);
 
   //==================================================================
@@ -37,14 +38,17 @@ export default function CreateHabit({}) {
   const onCreateHabit = async () => {
     const response = await addHabit({
       name,
-      performedLastDate: date,
+      performedLastDate: lastDate!,
     });
     if (!response.error) {
       navigation.goBack();
     }
   };
 
-  const setNewDate = (date: Date) => setDate(date);
+  const setNewDate = (date: Date) => {
+    setDate(date);
+    setLastDate(date);
+  };
   const closeCalendar = () => setCalendarVisible(false);
   const openCalendar = () => {
     setCalendarVisible(true);

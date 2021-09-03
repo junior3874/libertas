@@ -27,6 +27,15 @@ export class CreateHabitController {
         return { message: err.message, error: { instance: err }, habit: null };
       }
 
+      if (!performedLastDate) {
+        const error = new MissingParamsError(["last date"]);
+        return {
+          message: error.message,
+          error: { instance: error },
+          habit: null,
+        };
+      }
+
       return {
         message: "Habit couldn't be created",
         error: { instance: err },
