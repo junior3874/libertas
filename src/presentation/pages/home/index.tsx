@@ -63,7 +63,9 @@ export default function Home() {
             <HeaderCornerImage source={PatternsImg} />
 
             <HeaderText.Title message="Seja bem vindo" />
-            <HeaderText.Subtitle message="Você tem 3 hábitos a serem quebrados" />
+            <HeaderText.Subtitle
+              message={`Você tem ${habits.length} hábitos a serem quebrados`}
+            />
           </Content>
         )}
       />
