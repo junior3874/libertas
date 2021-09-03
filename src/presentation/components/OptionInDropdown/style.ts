@@ -14,4 +14,6 @@ export const TitleOption = styled.Text`
   color: #ffffff;
   font-size: 16px;
   line-height: 24px;
+
+  font-family: Poppins_400Regular;
 `;

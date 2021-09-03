@@ -32,8 +32,7 @@ export const TitleArea = styled.TouchableOpacity`
 `;
 
 export const TitleName = styled.Text`
-  font-style: normal;
-  font-weight: normal;
+  font-family: Poppins_400Regular;
   font-size: 14px;
   line-height: 21px;
   color: #858585;
@@ -51,11 +50,12 @@ export const DropdownArea = styled(Animated.View)`
 `;
 
 export const LabelTitle = styled.Text`
-  font-weight: 500;
   font-size: 16px;
   line-height: 24px;
   color: white;
   margin-bottom: 12px;
+
+  font-family: Poppins_400Regular;
 `;
 
 export const PersonalizedOptionArea = styled.View`
@@ -75,8 +75,9 @@ export const PersonalizedOptionInput = styled.TextInput`
   width: 100%;
   justify-content: center;
   color: white;
-  background-color: yellow;
   padding: 0 15px;
+
+  font-family: Poppins_400Regular;
 `;
 
 export const ModalPressable = styled.Pressable``;

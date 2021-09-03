@@ -24,22 +24,18 @@ export const HabitInformationArea = styled.View`
 
 export const HabitInformationText = styled.Text`
   margin-bottom: 5px;
-  font-family: Poppins;
+  font-family: Poppins_400Regular;
   font-style: normal;
-  font-weight: normal;
   font-size: 16px;
   line-height: 24px;
-
   color: #ffffff;
 `;
 
 export const HabitInformationLastDate = styled.Text`
-  font-family: Poppins;
+  font-family: Poppins_600SemiBold;
   font-style: normal;
-  font-weight: 600;
   font-size: 16px;
   line-height: 24px;
-
   color: #6410e6;
 `;
 

@@ -48,10 +48,14 @@ export const TimeElapsedBox = styled.View<IsRightSideElementProps>`
 export const TimeElapsedTitle = styled.Text`
   font-size: 16px;
   color: #ffffff;
+
+  font-family: Poppins_400Regular;
 `;
 
 export const TimeElapsedCount = styled.Text`
   margin-top: 14px;
   font-size: 26px;
   color: #6410e6;
+
+  font-family: Poppins_600SemiBold;
 `;

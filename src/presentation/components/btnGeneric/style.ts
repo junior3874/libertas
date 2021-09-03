@@ -12,7 +12,7 @@ export const Container = styled.TouchableOpacity<BtnProps>`
 `;
 
 export const BtnTitle = styled.Text`
-  font-weight: 500;
+  font-family: Poppins_500Medium;
   font-size: 20px;
   line-height: 30px;
   color: #ffffff;
