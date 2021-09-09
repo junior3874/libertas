@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Animated, Keyboard } from "react-native";
+import { Animated, Easing } from "react-native";
 import { format } from "date-fns";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -106,15 +106,15 @@ const Form = {
     const openDropdown = () => {
       Animated.timing(dropdownAnimation, {
         toValue: 0,
-        duration: 400,
+        duration: 175,
         useNativeDriver: true,
       }).start();
     };
 
     const closeDropdown = () => {
       Animated.timing(dropdownAnimation, {
-        toValue: -100,
-        duration: 400,
+        toValue: -200,
+        duration: 175,
         useNativeDriver: true,
       }).start(() => {
         setDropdownVisible(false);
@@ -163,6 +163,7 @@ const Form = {
                 img={element.img}
                 title={element.title}
                 onPress={(name: string) => setNewSelectedOption(name)}
+                key={element.title}
               />
             ))}
             <OptionInDropdown
