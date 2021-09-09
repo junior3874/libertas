@@ -44,7 +44,7 @@ export default function Home() {
         renderItem={({ item: habit, index }: { item: any; index: number }) => (
           <HabitWrapper lastHabit={index === habits.length - 1}>
             <Habit
-              name={habit.name}
+              name={habit.name.toLowerCase()}
               lastDate={habit.performedLastDate}
               onPress={() => navigateTo("Habit", habit)}
               onMorePress={() =>
