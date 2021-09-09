@@ -1,6 +1,14 @@
 import { ILanguage } from "./interfaces";
 
 export class ENUSLanguage implements ILanguage {
+  getHabitLoadedSuccessfullyMessage(name: string): string {
+    return "Bad habit loaded successfully";
+  }
+
+  getHabitNotLoadedMessage(name: string): string {
+    return "Bad habit couldn't be loaded";
+  }
+
   getHabitRemovedSuccessfullyMessage(_name: string): string {
     return "Bad habit was removed successfully";
   }

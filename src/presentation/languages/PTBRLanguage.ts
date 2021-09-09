@@ -1,6 +1,14 @@
 import { ILanguage } from "./interfaces";
 
 export class PTBRLanguage implements ILanguage {
+  getHabitLoadedSuccessfullyMessage(name: string): string {
+    return "Vício carregado com sucesso";
+  }
+
+  getHabitNotLoadedMessage(name: string): string {
+    return "Vício não pôde ser encontrado";
+  }
+
   getHabitRemovedSuccessfullyMessage(_name: string): string {
     return "Vício removido com sucesso";
   }
@@ -10,7 +18,7 @@ export class PTBRLanguage implements ILanguage {
   }
 
   getNoHabitFoundErrorMessage(): string {
-    return "Vício não encontrado";
+    return "Nenhum vício foi encontrado";
   }
 
   getHabitsLoadedSuccessfullyMessage(): string {

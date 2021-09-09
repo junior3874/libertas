@@ -12,5 +12,5 @@ export interface IControllerFactory {
   makeIndexHabitController(language: ILanguage): IndexHabitController;
   makeRemoveHabitController(language: ILanguage): RemoveHabitController;
   makeUpdateHabitController(): UpdateHabitController;
-  makeShowHabitController(): ShowHabitController;
+  makeShowHabitController(language: ILanguage): ShowHabitController;
 }

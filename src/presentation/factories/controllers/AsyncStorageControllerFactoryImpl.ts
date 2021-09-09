@@ -70,11 +70,11 @@ export class AsyncStorageControllerFactoryImpl implements IControllerFactory {
     return new UpdateHabitController(useCase);
   }
 
-  makeShowHabitController(): ShowHabitController {
+  makeShowHabitController(language: ILanguage): ShowHabitController {
     const showHabitRepository =
       this.repositoryFactory.makeShowHabitRepository();
     const useCase = new ShowHabitUseCase(showHabitRepository);
 
-    return new ShowHabitController(useCase);
+    return new ShowHabitController(useCase, language);
   }
 }
