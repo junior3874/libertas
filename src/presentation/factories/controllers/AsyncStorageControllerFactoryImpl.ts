@@ -12,6 +12,7 @@ import {
   ShowHabitController,
   UpdateHabitController,
 } from "../../controllers";
+import { ILanguage } from "../../languages";
 import {
   AsyncStorageRepositoryFactoryImpl,
   IRepositoryFactory,
@@ -22,7 +23,7 @@ export class AsyncStorageControllerFactoryImpl implements IControllerFactory {
   repositoryFactory: IRepositoryFactory =
     new AsyncStorageRepositoryFactoryImpl();
 
-  makeCreateHabitController(): CreateHabitController {
+  makeCreateHabitController(language: ILanguage): CreateHabitController {
     const createHabitRepository =
       this.repositoryFactory.makeCreateHabitRepository();
     const showHabitRepository =
@@ -32,7 +33,7 @@ export class AsyncStorageControllerFactoryImpl implements IControllerFactory {
       createHabitRepository
     );
 
-    return new CreateHabitController(useCase);
+    return new CreateHabitController(useCase, language);
   }
 
   makeIndexHabitController(): IndexHabitController {

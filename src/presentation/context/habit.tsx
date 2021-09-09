@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import * as Localization from "expo-localization";
 
 import { AsyncStorageControllerFactoryImpl } from "../factories/controllers/AsyncStorageControllerFactoryImpl";
 
@@ -8,10 +9,14 @@ import { CreateHabitDTO, UpdateHabitDTO } from "../../useCases/DTOs";
 import { toasts } from "../utils/toats";
 import { useCallback } from "react";
 import { BaseResponse } from "../controllers/type-defs";
+import { i18n } from "../languages";
+
+const language = i18n.getLanguageByLocale(Localization.locale);
 
 const makeControllers = new AsyncStorageControllerFactoryImpl();
 const indexHabitController = makeControllers.makeIndexHabitController();
-const createHabitController = makeControllers.makeCreateHabitController();
+const createHabitController =
+  makeControllers.makeCreateHabitController(language);
 const removeHabitController = makeControllers.makeRemoveHabitController();
 const updateHabitController = makeControllers.makeUpdateHabitController();
 const showHabitController = makeControllers.makeShowHabitController();
@@ -89,8 +94,8 @@ export const HabitProvider: React.FC = ({ children }) => {
   }, []);
 
   function showToastMessage(message: string, success: boolean) {
-    if (success) toasts.showSuccess(message);
-    if (!success) toasts.showError(message);
+    if (success) toasts.showSuccess(language.getSuccessToastTitle(), message);
+    if (!success) toasts.showError(language.getErrorToastTitle(), message);
   }
 
   return (
