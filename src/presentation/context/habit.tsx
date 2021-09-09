@@ -1,5 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
-import * as Localization from "expo-localization";
+import React, { createContext, useState, useEffect, useContext } from "react";
 
 import { AsyncStorageControllerFactoryImpl } from "../factories/controllers/AsyncStorageControllerFactoryImpl";
 
@@ -9,19 +8,9 @@ import { CreateHabitDTO, UpdateHabitDTO } from "../../useCases/DTOs";
 import { toasts } from "../utils/toats";
 import { useCallback } from "react";
 import { BaseResponse } from "../controllers/type-defs";
-import { i18n } from "../languages";
-
-const language = i18n.getLanguageByLocale(Localization.locale);
+import { LanguageContext } from "./language";
 
 const makeControllers = new AsyncStorageControllerFactoryImpl();
-const indexHabitController = makeControllers.makeIndexHabitController(language);
-const createHabitController =
-  makeControllers.makeCreateHabitController(language);
-const removeHabitController =
-  makeControllers.makeRemoveHabitController(language);
-const updateHabitController =
-  makeControllers.makeUpdateHabitController(language);
-const showHabitController = makeControllers.makeShowHabitController(language);
 
 type HabitContextProps = {
   habits: Habit[];
@@ -34,6 +23,18 @@ type HabitContextProps = {
 export const HabitContext = createContext({} as HabitContextProps);
 
 export const HabitProvider: React.FC = ({ children }) => {
+  const { language } = useContext(LanguageContext);
+
+  const indexHabitController =
+    makeControllers.makeIndexHabitController(language);
+  const createHabitController =
+    makeControllers.makeCreateHabitController(language);
+  const removeHabitController =
+    makeControllers.makeRemoveHabitController(language);
+  const updateHabitController =
+    makeControllers.makeUpdateHabitController(language);
+  const showHabitController = makeControllers.makeShowHabitController(language);
+
   const [loadingRequest, setLoadingRequest] = useState(false);
   const [habits, setHabits] = useState<Habit[]>([]);
 
