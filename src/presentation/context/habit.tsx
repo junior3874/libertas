@@ -14,7 +14,7 @@ import { i18n } from "../languages";
 const language = i18n.getLanguageByLocale(Localization.locale);
 
 const makeControllers = new AsyncStorageControllerFactoryImpl();
-const indexHabitController = makeControllers.makeIndexHabitController();
+const indexHabitController = makeControllers.makeIndexHabitController(language);
 const createHabitController =
   makeControllers.makeCreateHabitController(language);
 const removeHabitController = makeControllers.makeRemoveHabitController();
