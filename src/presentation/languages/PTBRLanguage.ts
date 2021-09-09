@@ -1,6 +1,14 @@
 import { ILanguage } from "./ILanguage";
 
 export class PTBRLanguage implements ILanguage {
+  getHabitsLoadedSuccessfullyMessage(): string {
+    return "Vícios listados com sucesso";
+  }
+
+  getHabitsNotLoadedMessage(): string {
+    return "Houve um problema ao listar seus vícios";
+  }
+
   getSuccessToastTitle(): string {
     return "Sucesso";
   }

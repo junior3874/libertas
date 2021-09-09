@@ -36,12 +36,12 @@ export class AsyncStorageControllerFactoryImpl implements IControllerFactory {
     return new CreateHabitController(useCase, language);
   }
 
-  makeIndexHabitController(): IndexHabitController {
+  makeIndexHabitController(language: ILanguage): IndexHabitController {
     const indexHabitRepository =
       this.repositoryFactory.makeIndexHabitRepository();
     const useCase = new IndexHabitUseCase(indexHabitRepository);
 
-    return new IndexHabitController(useCase);
+    return new IndexHabitController(useCase, language);
   }
 
   makeRemoveHabitController(): RemoveHabitController {

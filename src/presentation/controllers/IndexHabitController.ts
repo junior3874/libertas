@@ -1,26 +1,34 @@
 import { IndexHabitUseCase } from "../../useCases";
 import { NoHabitFoundError } from "../../useCases/errors";
+import { ILanguage } from "../languages";
 import { ResponseWithHabitArray } from "./type-defs";
 
 export class IndexHabitController {
-  public constructor(private useCase: IndexHabitUseCase) {}
+  public constructor(
+    private useCase: IndexHabitUseCase,
+    private language: ILanguage
+  ) {}
 
   async handle(): Promise<ResponseWithHabitArray> {
     try {
       const habits = await this.useCase.index();
 
-      return { message: "Habits loaded successfully", error: null, habits };
+      return {
+        message: this.language.getHabitsLoadedSuccessfullyMessage(),
+        error: null,
+        habits,
+      };
     } catch (err) {
       if (err instanceof NoHabitFoundError) {
         return {
-          message: "Habits loaded successfully",
+          message: this.language.getHabitsLoadedSuccessfullyMessage(),
           error: null,
           habits: [],
         };
       }
 
       return {
-        message: "Habits couldn't be loaded",
+        message: this.language.getHabitsNotLoadedMessage(),
         error: {
           instance: err,
         },

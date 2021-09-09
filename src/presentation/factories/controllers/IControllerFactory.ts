@@ -9,7 +9,7 @@ import { ILanguage } from "../../languages";
 
 export interface IControllerFactory {
   makeCreateHabitController(language: ILanguage): CreateHabitController;
-  makeIndexHabitController(): IndexHabitController;
+  makeIndexHabitController(language: ILanguage): IndexHabitController;
   makeRemoveHabitController(): RemoveHabitController;
   makeUpdateHabitController(): UpdateHabitController;
   makeShowHabitController(): ShowHabitController;
