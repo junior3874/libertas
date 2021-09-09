@@ -1,12 +1,10 @@
 import { ICreateHabitControllerLanguage } from "./ICreateHabitControllerLanguage";
-import { IHabitAlreadyExistsErrorLanguage } from "./IHabitAlreadyExistsErrorLanguage";
 import { IIndexHabitControllerLanguage } from "./IIndexHabitControllerLanguage";
-import { IMissingParamsErrorLanguage } from "./IMissingParamsErrorLanguage";
+import { IRemoveHabitControllerLanguage } from "./IRemoveHabitControllerLanguage";
 import { IToastLanguage } from "./IToastLanguage";
 
 export interface ILanguage
-  extends IHabitAlreadyExistsErrorLanguage,
-    IMissingParamsErrorLanguage,
-    IToastLanguage,
+  extends IToastLanguage,
     ICreateHabitControllerLanguage,
-    IIndexHabitControllerLanguage {}
+    IIndexHabitControllerLanguage,
+    IRemoveHabitControllerLanguage {}

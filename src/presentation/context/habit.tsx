@@ -17,7 +17,8 @@ const makeControllers = new AsyncStorageControllerFactoryImpl();
 const indexHabitController = makeControllers.makeIndexHabitController(language);
 const createHabitController =
   makeControllers.makeCreateHabitController(language);
-const removeHabitController = makeControllers.makeRemoveHabitController();
+const removeHabitController =
+  makeControllers.makeRemoveHabitController(language);
 const updateHabitController = makeControllers.makeUpdateHabitController();
 const showHabitController = makeControllers.makeShowHabitController();
 
