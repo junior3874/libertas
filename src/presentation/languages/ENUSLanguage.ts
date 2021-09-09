@@ -1,6 +1,21 @@
 import { ILanguage } from "./interfaces";
 
 export class ENUSLanguage implements ILanguage {
+  getCurrentNameParamMessage(): string {
+    return "current name";
+  }
+
+  getHabitUpdatedSuccessfullyMessage(): string {
+    return "Bad habit was updated successfully";
+  }
+  getHabitNotUpdatedMessage(): string {
+    return "Couldn't update bad habit";
+  }
+
+  getNewNameIsEqualToOldOneErrorMessage(): string {
+    return "New name is equal to current name";
+  }
+
   getHabitLoadedSuccessfullyMessage(name: string): string {
     return "Bad habit loaded successfully";
   }

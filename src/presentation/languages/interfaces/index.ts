@@ -5,4 +5,5 @@ export * from "./ICreateHabitControllerLanguage";
 export * from "./IIndexHabitControllerLanguage";
 export * from "./IRemoveHabitControllerLanguage";
 export * from "./IShowHabitControllerLanguage";
+export * from "./IUpdateHabitControllerLanguage";
 export * from "./ILanguage";

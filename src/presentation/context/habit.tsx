@@ -19,7 +19,8 @@ const createHabitController =
   makeControllers.makeCreateHabitController(language);
 const removeHabitController =
   makeControllers.makeRemoveHabitController(language);
-const updateHabitController = makeControllers.makeUpdateHabitController();
+const updateHabitController =
+  makeControllers.makeUpdateHabitController(language);
 const showHabitController = makeControllers.makeShowHabitController(language);
 
 type HabitContextProps = {

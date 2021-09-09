@@ -6,14 +6,16 @@ import {
   NoHabitFoundError,
 } from "../../useCases/errors";
 import { NewNameIsEqualToOldOneError } from "../errors";
+import { IUpdateHabitControllerLanguage } from "../languages/interfaces";
 import { ResponseWithHabit } from "./type-defs";
 import { UpdateHabitController } from "./UpdateHabitController";
 
 function makeSut() {
   const updateHabitUseCaseMock = mock<UpdateHabitUseCase>();
-  const sut = new UpdateHabitController(updateHabitUseCaseMock);
+  const languageMock = mock<IUpdateHabitControllerLanguage>();
+  const sut = new UpdateHabitController(updateHabitUseCaseMock, languageMock);
 
-  return { sut, updateHabitUseCaseMock };
+  return { sut, updateHabitUseCaseMock, languageMock };
 }
 
 describe("Update Habit controller", () => {
@@ -31,7 +33,7 @@ describe("Update Habit controller", () => {
   });
 
   it("should return ResponseWithHabit with a generic error message", async () => {
-    const { sut, updateHabitUseCaseMock } = makeSut();
+    const { sut, updateHabitUseCaseMock, languageMock } = makeSut();
     updateHabitUseCaseMock.update.mockImplementationOnce(() => {
       throw new Error("Server side error occurred");
     });
@@ -42,11 +44,11 @@ describe("Update Habit controller", () => {
       performedLastDate: new Date(),
     });
 
-    expect(response.message).toBe("Habit couldn't be updated");
+    expect(response.message).toBe(languageMock.getHabitNotUpdatedMessage());
   });
 
   it("should return ResponseWithHabit with HabitNotFoundError", async () => {
-    const { sut, updateHabitUseCaseMock } = makeSut();
+    const { sut, updateHabitUseCaseMock, languageMock } = makeSut();
     updateHabitUseCaseMock.update.mockImplementationOnce(() => {
       throw new NoHabitFoundError();
     });
@@ -57,11 +59,13 @@ describe("Update Habit controller", () => {
       performedLastDate: new Date(),
     });
 
-    expect(response.error!.instance).toEqual(new NoHabitFoundError());
+    expect(response.message).toEqual(
+      languageMock.getNoHabitFoundErrorMessage()
+    );
   });
 
   it("should return ResponseWithHabit with HabitAlreadyExistError", async () => {
-    const { sut, updateHabitUseCaseMock } = makeSut();
+    const { sut, updateHabitUseCaseMock, languageMock } = makeSut();
     updateHabitUseCaseMock.update.mockImplementationOnce(() => {
       throw new HabitAlreadyExistsError("Testing");
     });
@@ -72,13 +76,13 @@ describe("Update Habit controller", () => {
       performedLastDate: new Date(),
     });
 
-    expect(response.error!.instance).toEqual(
-      new HabitAlreadyExistsError("Testing")
+    expect(response.message).toEqual(
+      languageMock.getHabitAlreadyExistsErrorMessage("Testing")
     );
   });
 
   it("should return ResponseWithHabit with NewNameIsEqualToOldOneError", async () => {
-    const { sut, updateHabitUseCaseMock } = makeSut();
+    const { sut, updateHabitUseCaseMock, languageMock } = makeSut();
     const oldHabit = { name: "My habit", performedLastDate: new Date() };
     const newUpdatedHabit: UpdateHabitDTO = {
       currentName: oldHabit.name,
@@ -88,11 +92,13 @@ describe("Update Habit controller", () => {
 
     const response: ResponseWithHabit = await sut.handle(newUpdatedHabit);
 
-    expect(response.error!.instance).toEqual(new NewNameIsEqualToOldOneError());
+    expect(response.message).toEqual(
+      languageMock.getNewNameIsEqualToOldOneErrorMessage()
+    );
   });
 
   it("should return ResponseWithHabit with MissingParamsError", async () => {
-    const { sut, updateHabitUseCaseMock } = makeSut();
+    const { sut, updateHabitUseCaseMock, languageMock } = makeSut();
     const oldHabit = { name: "My habit", performedLastDate: new Date() };
     const newUpdatedHabit = {
       newName: "My updated habit name",
@@ -103,17 +109,24 @@ describe("Update Habit controller", () => {
       newUpdatedHabit as UpdateHabitDTO
     );
 
-    expect(response.message).toBe("You need to specify: current name");
+    const expectedMessage = languageMock.getMissingParamsErrorMessage([
+      languageMock.getCurrentNameParamMessage(),
+    ]);
+    expect(response.message).toBe(expectedMessage);
   });
 
   it("should return ResponseWithHabit with MissingParamsError", async () => {
-    const { sut, updateHabitUseCaseMock } = makeSut();
+    const { sut, updateHabitUseCaseMock, languageMock } = makeSut();
     const oldHabit = { name: "My habit", performedLastDate: new Date() };
     const newUpdatedHabit: UpdateHabitDTO = { currentName: oldHabit.name };
     updateHabitUseCaseMock.update.mockResolvedValueOnce(oldHabit);
 
     const response: ResponseWithHabit = await sut.handle(newUpdatedHabit);
 
-    expect(response.message).toBe("You need to specify: name, date");
+    const expectedMessage = languageMock.getMissingParamsErrorMessage([
+      languageMock.getHabitNameParamMessage(),
+      languageMock.getPerformedLastDateParamMessage(),
+    ]);
+    expect(response.message).toBe(expectedMessage);
   });
 });

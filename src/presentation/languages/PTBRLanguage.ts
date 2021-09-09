@@ -1,6 +1,22 @@
 import { ILanguage } from "./interfaces";
 
 export class PTBRLanguage implements ILanguage {
+  getCurrentNameParamMessage(): string {
+    return "nome atual";
+  }
+
+  getHabitUpdatedSuccessfullyMessage(): string {
+    return "Vício editado com sucesso";
+  }
+
+  getHabitNotUpdatedMessage(): string {
+    return "Vício não pôde ser editado";
+  }
+
+  getNewNameIsEqualToOldOneErrorMessage(): string {
+    return "Novo nome é igual ao nome atual";
+  }
+
   getHabitLoadedSuccessfullyMessage(name: string): string {
     return "Vício carregado com sucesso";
   }
