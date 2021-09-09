@@ -5,7 +5,7 @@ import {
   ShowHabitController,
   UpdateHabitController,
 } from "../../controllers";
-import { ILanguage } from "../../languages";
+import { ILanguage } from "../../languages/interfaces";
 
 export interface IControllerFactory {
   makeCreateHabitController(language: ILanguage): CreateHabitController;

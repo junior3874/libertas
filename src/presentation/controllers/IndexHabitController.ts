@@ -1,12 +1,12 @@
 import { IndexHabitUseCase } from "../../useCases";
 import { NoHabitFoundError } from "../../useCases/errors";
-import { ILanguage } from "../languages";
+import { IIndexHabitControllerLanguage } from "../languages/interfaces";
 import { ResponseWithHabitArray } from "./type-defs";
 
 export class IndexHabitController {
   public constructor(
     private useCase: IndexHabitUseCase,
-    private language: ILanguage
+    private language: IIndexHabitControllerLanguage
   ) {}
 
   async handle(): Promise<ResponseWithHabitArray> {

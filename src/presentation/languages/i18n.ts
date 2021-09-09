@@ -1,5 +1,5 @@
 import { ENUSLanguage } from "./ENUSLanguage";
-import { ILanguage } from "./ILanguage";
+import { ILanguage } from "./interfaces";
 import { PTBRLanguage } from "./PTBRLanguage";
 
 const languages = {

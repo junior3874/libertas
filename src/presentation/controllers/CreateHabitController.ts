@@ -3,12 +3,12 @@ import { CreateHabitDTO } from "../../useCases/DTOs";
 import { HabitAlreadyExistsError } from "../../useCases/errors";
 import { ResponseWithHabit } from "./type-defs";
 import { MissingParamsError } from "../errors";
-import { ILanguage } from "../languages";
+import { ICreateHabitControllerLanguage } from "../languages/interfaces";
 
 export class CreateHabitController {
   public constructor(
     private useCase: CreateHabitUseCase,
-    private language: ILanguage
+    private language: ICreateHabitControllerLanguage
   ) {}
 
   async handle({

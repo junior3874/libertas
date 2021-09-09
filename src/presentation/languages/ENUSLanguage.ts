@@ -1,4 +1,4 @@
-import { ILanguage } from "./ILanguage";
+import { ILanguage } from "./interfaces";
 
 export class ENUSLanguage implements ILanguage {
   getHabitsLoadedSuccessfullyMessage(): string {

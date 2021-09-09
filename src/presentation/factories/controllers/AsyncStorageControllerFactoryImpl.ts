@@ -12,7 +12,7 @@ import {
   ShowHabitController,
   UpdateHabitController,
 } from "../../controllers";
-import { ILanguage } from "../../languages";
+import { ILanguage } from "../../languages/interfaces";
 import {
   AsyncStorageRepositoryFactoryImpl,
   IRepositoryFactory,

@@ -2,13 +2,13 @@ import { mock } from "jest-mock-extended";
 import { CreateHabitUseCase } from "../../useCases";
 import { CreateHabitDTO } from "../../useCases/DTOs";
 import { HabitAlreadyExistsError } from "../../useCases/errors";
-import { ILanguage } from "../languages";
+import { ICreateHabitControllerLanguage } from "../languages/interfaces";
 import { CreateHabitController } from "./CreateHabitController";
 import { ResponseWithHabit } from "./type-defs";
 
 function makeSut() {
   const createHabitUseCaseMock = mock<CreateHabitUseCase>();
-  const languageMock = mock<ILanguage>();
+  const languageMock = mock<ICreateHabitControllerLanguage>();
   const sut = new CreateHabitController(createHabitUseCaseMock, languageMock);
 
   return { sut, createHabitUseCaseMock, languageMock };

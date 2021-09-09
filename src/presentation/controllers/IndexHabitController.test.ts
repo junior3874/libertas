@@ -1,12 +1,12 @@
 import { mock } from "jest-mock-extended";
 import { IndexHabitUseCase } from "../../useCases";
 import { NoHabitFoundError } from "../../useCases/errors";
-import { ILanguage } from "../languages";
+import { IIndexHabitControllerLanguage } from "../languages/interfaces";
 import { IndexHabitController } from "./IndexHabitController";
 
 function makeSut() {
   const indexHabitUseCaseMock = mock<IndexHabitUseCase>();
-  const languageMock = mock<ILanguage>();
+  const languageMock = mock<IIndexHabitControllerLanguage>();
   const sut = new IndexHabitController(indexHabitUseCaseMock, languageMock);
 
   return { sut, indexHabitUseCaseMock };

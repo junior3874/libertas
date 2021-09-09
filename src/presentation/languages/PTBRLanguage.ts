@@ -1,4 +1,4 @@
-import { ILanguage } from "./ILanguage";
+import { ILanguage } from "./interfaces";
 
 export class PTBRLanguage implements ILanguage {
   getHabitsLoadedSuccessfullyMessage(): string {
