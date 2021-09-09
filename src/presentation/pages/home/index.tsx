@@ -15,6 +15,7 @@ import {
 import Habit from "../../components/Habit";
 import HeaderText from "../../components/HeaderText";
 import { HabitContext } from "../../context/habit";
+import { LanguageContext } from "../../context/language";
 
 const PatternsImg = require("../../assets/patterns.png");
 const PlusImg = require("../../assets/plus.png");
@@ -27,6 +28,7 @@ export default function Home() {
   //==================================================================
 
   const { habits } = useContext(HabitContext);
+  const { language } = useContext(LanguageContext);
 
   //==================================================================
   // Handlers
@@ -62,9 +64,9 @@ export default function Home() {
           <Content>
             <HeaderCornerImage source={PatternsImg} />
 
-            <HeaderText.Title message="Seja bem vindo" />
+            <HeaderText.Title message={language.getHomePageTitleMessage()} />
             <HeaderText.Subtitle
-              message={`Você tem ${habits.length} hábitos a serem quebrados`}
+              message={language.getHomePageSubtitleMessage(habits.length)}
             />
           </Content>
         )}

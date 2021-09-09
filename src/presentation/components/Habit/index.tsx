@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import * as Localization from "expo-localization";
 import { Image } from "react-native";
 import {
   formatDistanceStrict,
@@ -6,7 +7,7 @@ import {
   intervalToDuration,
 } from "date-fns";
 
-import { ptBR } from "date-fns/locale";
+import { ptBR, enUS } from "date-fns/locale";
 
 import {
   Container,
@@ -18,6 +19,7 @@ import {
   HabitOptionsArea,
 } from "./styles";
 import { defaultHabitOptions } from "../../lib/defaultHabits";
+import { LanguageContext } from "../../context/language";
 
 const Pill = require("../../assets/pill.png");
 const Cigar = require("../../assets/cigar.png");
@@ -32,12 +34,21 @@ type HabitProps = {
   onMorePress(): void;
 };
 
+const dateFnsLocales = {
+  "pt-BR": ptBR,
+  pt: ptBR,
+  "en-US": enUS,
+  en: enUS,
+} as { [key: string]: any };
+
 export default function Habit({
   name,
   lastDate,
   onPress,
   onMorePress,
 }: HabitProps) {
+  const { language } = useContext(LanguageContext);
+
   const getDistanceCurrentDataBetweenLastDate = intervalToDuration({
     start: lastDate,
     end: new Date(),
@@ -45,7 +56,7 @@ export default function Habit({
 
   const distance = formatDuration(
     { ...getDistanceCurrentDataBetweenLastDate },
-    { locale: ptBR }
+    { locale: dateFnsLocales[Localization.locale] }
   );
 
   const image =
@@ -57,7 +68,7 @@ export default function Habit({
         <ImageHabit source={image} />
         <HabitInformationArea>
           <HabitInformationText>
-            Você está livre de {name} há
+            {language.getHabitComponentTitleMessage(name)}
           </HabitInformationText>
           <HabitInformationLastDate>{distance}</HabitInformationLastDate>
         </HabitInformationArea>

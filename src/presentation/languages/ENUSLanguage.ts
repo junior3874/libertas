@@ -1,6 +1,18 @@
 import { ILanguage } from "./interfaces";
 
 export class ENUSLanguage implements ILanguage {
+  getHomePageTitleMessage(): string {
+    return "Welcome";
+  }
+
+  getHomePageSubtitleMessage(habitsAmount: number): string {
+    return `You have ${habitsAmount} bad habits to let go of`;
+  }
+
+  getHabitComponentTitleMessage(habitName: string): string {
+    return `You have been free of ${habitName} for`;
+  }
+
   getCurrentNameParamMessage(): string {
     return "current name";
   }
@@ -8,6 +20,7 @@ export class ENUSLanguage implements ILanguage {
   getHabitUpdatedSuccessfullyMessage(): string {
     return "Bad habit was updated successfully";
   }
+
   getHabitNotUpdatedMessage(): string {
     return "Couldn't update bad habit";
   }

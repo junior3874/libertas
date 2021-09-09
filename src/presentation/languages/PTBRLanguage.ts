@@ -1,6 +1,18 @@
 import { ILanguage } from "./interfaces";
 
 export class PTBRLanguage implements ILanguage {
+  getHomePageTitleMessage(): string {
+    return "Seja bem vindo";
+  }
+
+  getHomePageSubtitleMessage(habitsAmount: number): string {
+    return `Você tem ${habitsAmount} habitos a serem quebrados`;
+  }
+
+  getHabitComponentTitleMessage(habitName: string): string {
+    return `Você está livre de ${habitName} há`;
+  }
+
   getCurrentNameParamMessage(): string {
     return "nome atual";
   }
