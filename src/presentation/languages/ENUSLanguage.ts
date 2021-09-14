@@ -1,6 +1,34 @@
 import { ILanguage } from "./interfaces";
 
 export class ENUSLanguage implements ILanguage {
+  getHabitPageTitleMessage(): string {
+    return "About your bad habit";
+  }
+
+  getHabitPageSubtitleMessage(): string {
+    return "How long you have been sober";
+  }
+
+  getHabitPageDaysMessage(): string {
+    return "Days";
+  }
+
+  getHabitPageHoursMessage(): string {
+    return "Hours";
+  }
+
+  getHabitPageMinutesMessage(): string {
+    return "Minutes";
+  }
+
+  getHabitPageSecondsMessage(): string {
+    return "Seconds";
+  }
+
+  getHabitPageResetTimeButtonMessage(): string {
+    return "Reset Timer";
+  }
+
   getHomePageTitleMessage(): string {
     return "Welcome";
   }

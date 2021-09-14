@@ -1,6 +1,34 @@
 import { ILanguage } from "./interfaces";
 
 export class PTBRLanguage implements ILanguage {
+  getHabitPageTitleMessage(): string {
+    return "Sobre o vício";
+  }
+
+  getHabitPageSubtitleMessage(): string {
+    return "Há quanto tempo você está sóbrio";
+  }
+
+  getHabitPageDaysMessage(): string {
+    return "Dias";
+  }
+
+  getHabitPageHoursMessage(): string {
+    return "Horas";
+  }
+
+  getHabitPageMinutesMessage(): string {
+    return "Minutos";
+  }
+
+  getHabitPageSecondsMessage(): string {
+    return "Segundos";
+  }
+
+  getHabitPageResetTimeButtonMessage(): string {
+    return "Restar Tempo";
+  }
+
   getHomePageTitleMessage(): string {
     return "Seja bem vindo";
   }
