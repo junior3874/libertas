@@ -1,6 +1,34 @@
 import { ILanguage } from "./interfaces";
 
 export class ENUSLanguage implements ILanguage {
+  getDateInputTitlePropMessage(): string {
+    return "Day / Month / Year";
+  }
+
+  getDropdownInputTitlePropMessage(): string {
+    return "Select a bad habit";
+  }
+
+  getCreateHabitPageTitleMessage(): string {
+    return "Create new bad habit";
+  }
+
+  getCreateHabitPageSubtitleMessage(): string {
+    return "Choose one of the bad habits below";
+  }
+
+  getDropdownInputMessage(): string {
+    return "Which bad habit do you want to quit";
+  }
+
+  getDateInputMessage(): string {
+    return "Last time when you did this bad habit";
+  }
+
+  getCreateHabitButtonMessage(): string {
+    return "Create new bad habit";
+  }
+
   getHabitPageTitleMessage(): string {
     return "About your bad habit";
   }

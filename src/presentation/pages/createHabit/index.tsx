@@ -11,6 +11,8 @@ import BtnGeneric from "../../components/btnGeneric";
 import { Container, FormWrapper } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { defaultHabitOptions } from "../../lib/defaultHabits";
+import { LanguageContext } from "../../context/language";
+import { ICreateHabitPageLanguage } from "../../languages/interfaces/ICreateHabitPageLanguage";
 
 export default function CreateHabit({}) {
   const navigation = useNavigation();
@@ -20,6 +22,8 @@ export default function CreateHabit({}) {
   //==================================================================
 
   const { addHabit } = useContext(HabitContext);
+  const { language }: { language: ICreateHabitPageLanguage } =
+    useContext(LanguageContext);
 
   //==================================================================
   // States
@@ -64,14 +68,16 @@ export default function CreateHabit({}) {
     >
       <GoBackButton />
 
-      <HeaderText.Title message="Criar novo hábito" />
-      <HeaderText.Subtitle message="Escolha uma das opções de hábitos" />
+      <HeaderText.Title message={language.getCreateHabitPageTitleMessage()} />
+      <HeaderText.Subtitle
+        message={language.getCreateHabitPageSubtitleMessage()}
+      />
 
       <FormWrapper>
-        <Form.Label message="Qual hábito você quer enfrentar" />
+        <Form.Label message={language.getDropdownInputMessage()} />
         <Form.DropdownWrapper>
           <Form.Dropdown
-            title="Selecione um hábito"
+            title={language.getDropdownInputTitlePropMessage()}
             options={defaultHabitOptions}
             isDropdownOpen={isDropdownOpen}
             onDropdownOpen={() => setIsDropdownOpen(true)}
@@ -83,9 +89,10 @@ export default function CreateHabit({}) {
 
         <View style={{ height: 36 }} />
 
-        <Form.Label message="Última vez que você se rendeu a este hábito" />
+        <Form.Label message={language.getDateInputMessage()} />
 
         <Form.DateInput
+          title={language.getDateInputTitlePropMessage()}
           onPress={openCalendar}
           value={date}
           setLastDate={setNewDate}
@@ -96,7 +103,7 @@ export default function CreateHabit({}) {
 
       <View style={{ height: 60 }} />
       <BtnGeneric
-        title="Criar novo hábito"
+        title={language.getCreateHabitButtonMessage()}
         backgroundColor="#6410E6"
         onPress={() => onCreateHabit()}
       />

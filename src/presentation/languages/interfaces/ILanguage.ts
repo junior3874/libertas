@@ -1,4 +1,5 @@
 import { ICreateHabitControllerLanguage } from "./ICreateHabitControllerLanguage";
+import { ICreateHabitPageLanguage } from "./ICreateHabitPageLanguage";
 import { IHabitPageLanguage } from "./IHabitPageLanguage";
 import { IHomePageLanguage } from "./IHomePageLanguage";
 import { IIndexHabitControllerLanguage } from "./IIndexHabitControllerLanguage";
@@ -15,4 +16,5 @@ export interface ILanguage
     IShowHabitControllerLanguage,
     IUpdateHabitControllerLanguage,
     IHomePageLanguage,
-    IHabitPageLanguage {}
+    IHabitPageLanguage,
+    ICreateHabitPageLanguage {}

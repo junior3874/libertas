@@ -44,6 +44,7 @@ type FormWrapper = {
 };
 
 type FormDate = {
+  title: string;
   value: Date;
   setLastDate: (date: Date) => void;
   visible: boolean;
@@ -138,7 +139,7 @@ const Form = {
       <Container>
         <TitleArea onPress={dropdownOpenOrCloseProxy} activeOpacity={1}>
           {!personalizedOption ? (
-            <TitleName>{option || "Selecione um hábito"}</TitleName>
+            <TitleName>{title}</TitleName>
           ) : (
             <PersonalizedOptionArea>
               <PersonalizedOptionInput
@@ -178,7 +179,14 @@ const Form = {
   Label({ message }: FormLabel) {
     return <LabelTitle>{message}</LabelTitle>;
   },
-  DateInput({ value, setLastDate, visible, setIsVisible, onPress }: FormDate) {
+  DateInput({
+    value,
+    setLastDate,
+    visible,
+    setIsVisible,
+    onPress,
+    title,
+  }: FormDate) {
     const [selectedValue, setSelectedValue] = useState(false);
 
     const onChange = (_: any, selectedDate: Date | undefined) => {
@@ -192,9 +200,7 @@ const Form = {
 
     return (
       <TitleArea onPress={onPress}>
-        <TitleName>
-          {selectedValue ? formatedValue : "Dia / Mês / Ano"}{" "}
-        </TitleName>
+        <TitleName>{selectedValue ? formatedValue : title} </TitleName>
         {visible && (
           <DateTimePicker
             testID="dateTimePicker"

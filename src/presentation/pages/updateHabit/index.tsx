@@ -90,6 +90,7 @@ export default function UpdateHabit() {
 
         <Form.Label message="Última vez que você se rendeu a este hábito" />
         <Form.DateInput
+          title={"Dia / Mês / Ano"}
           onPress={openCalendar}
           value={date}
           setLastDate={_setLastDate}
