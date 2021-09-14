@@ -74,10 +74,12 @@ export default function CreateHabit({}) {
       />
 
       <FormWrapper>
-        <Form.Label message={language.getDropdownInputMessage()} />
+        <Form.Label
+          message={language.getCreateHabitPageDropdownInputMessage()}
+        />
         <Form.DropdownWrapper>
           <Form.Dropdown
-            title={language.getDropdownInputTitlePropMessage()}
+            title={language.getCreateHabitPageDropdownInputTitlePropMessage()}
             options={defaultHabitOptions}
             isDropdownOpen={isDropdownOpen}
             onDropdownOpen={() => setIsDropdownOpen(true)}
@@ -89,10 +91,10 @@ export default function CreateHabit({}) {
 
         <View style={{ height: 36 }} />
 
-        <Form.Label message={language.getDateInputMessage()} />
+        <Form.Label message={language.getCreateHabitPageDateInputMessage()} />
 
         <Form.DateInput
-          title={language.getDateInputTitlePropMessage()}
+          title={language.getCreateHabitPageDateInputTitlePropMessage()}
           onPress={openCalendar}
           value={date}
           setLastDate={setNewDate}
