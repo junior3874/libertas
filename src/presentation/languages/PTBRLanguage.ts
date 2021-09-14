@@ -1,17 +1,36 @@
 import { ILanguage } from "./interfaces";
 
 export class PTBRLanguage implements ILanguage {
-  getCreateHabitPageDropdownInputTitlePropMessage(): string {
+  getDropdownInputTitlePropMessage(): string {
     return "Selecione um vício";
   }
-  getCreateHabitPageDropdownInputMessage(): string {
+
+  getDropdownInputMessage(): string {
     return "Qual vício você quer enfrentar";
   }
-  getCreateHabitPageDateInputTitlePropMessage(): string {
+
+  getDateInputTitlePropMessage(): string {
     return "Dia / Mês / Ano";
   }
-  getCreateHabitPageDateInputMessage(): string {
+
+  getDateInputMessage(): string {
     return "Última vez que você se rendeu a este vício";
+  }
+
+  getUpdateHabitPageTitleMessage(): string {
+    return "Editar vício";
+  }
+
+  getUpdateHabitPageSubtitleMessage(): string {
+    return "Escolha qual opção você quer editar";
+  }
+
+  getUpdateHabitButtonMessage(): string {
+    return "Editar vício";
+  }
+
+  getDeleteHabitButtonMessage(): string {
+    return "Excluir vício";
   }
 
   getCreateHabitPageTitleMessage(): string {

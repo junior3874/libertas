@@ -7,6 +7,7 @@ import { IRemoveHabitControllerLanguage } from "./IRemoveHabitControllerLanguage
 import { IShowHabitControllerLanguage } from "./IShowHabitControllerLanguage";
 import { IToastLanguage } from "./IToastLanguage";
 import { IUpdateHabitControllerLanguage } from "./IUpdateHabitControllerLanguage";
+import { IUpdateHabitPageLanguage } from "./IUpdateHabitPageLanguage";
 
 export interface ILanguage
   extends IToastLanguage,
@@ -17,4 +18,5 @@ export interface ILanguage
     IUpdateHabitControllerLanguage,
     IHomePageLanguage,
     IHabitPageLanguage,
-    ICreateHabitPageLanguage {}
+    ICreateHabitPageLanguage,
+    IUpdateHabitPageLanguage {}

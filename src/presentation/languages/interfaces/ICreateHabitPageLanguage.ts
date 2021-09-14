@@ -1,9 +1,7 @@
-export interface ICreateHabitPageLanguage {
+import { IFormComponentLanguage } from "./IFormComponentLanguage";
+
+export interface ICreateHabitPageLanguage extends IFormComponentLanguage {
   getCreateHabitPageTitleMessage(): string;
   getCreateHabitPageSubtitleMessage(): string;
-  getDropdownInputTitlePropMessage(): string;
-  getDropdownInputMessage(): string;
-  getDateInputTitlePropMessage(): string;
-  getDateInputMessage(): string;
   getCreateHabitButtonMessage(): string;
 }
