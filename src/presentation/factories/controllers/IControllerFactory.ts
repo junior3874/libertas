@@ -5,11 +5,12 @@ import {
   ShowHabitController,
   UpdateHabitController,
 } from "../../controllers";
+import { ILanguage } from "../../languages/interfaces";
 
 export interface IControllerFactory {
-  makeCreateHabitController(): CreateHabitController;
-  makeIndexHabitController(): IndexHabitController;
-  makeRemoveHabitController(): RemoveHabitController;
-  makeUpdateHabitController(): UpdateHabitController;
-  makeShowHabitController(): ShowHabitController;
+  makeCreateHabitController(language: ILanguage): CreateHabitController;
+  makeIndexHabitController(language: ILanguage): IndexHabitController;
+  makeRemoveHabitController(language: ILanguage): RemoveHabitController;
+  makeUpdateHabitController(language: ILanguage): UpdateHabitController;
+  makeShowHabitController(language: ILanguage): ShowHabitController;
 }

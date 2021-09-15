@@ -15,6 +15,7 @@ import {
 import Habit from "../../components/Habit";
 import HeaderText from "../../components/HeaderText";
 import { HabitContext } from "../../context/habit";
+import { LanguageContext } from "../../context/language";
 
 const PatternsImg = require("../../assets/patterns.png");
 const PlusImg = require("../../assets/plus.png");
@@ -27,6 +28,7 @@ export default function Home() {
   //==================================================================
 
   const { habits } = useContext(HabitContext);
+  const { language } = useContext(LanguageContext);
 
   //==================================================================
   // Handlers
@@ -44,7 +46,7 @@ export default function Home() {
         renderItem={({ item: habit, index }: { item: any; index: number }) => (
           <HabitWrapper lastHabit={index === habits.length - 1}>
             <Habit
-              name={habit.name}
+              name={habit.name.toLowerCase()}
               lastDate={habit.performedLastDate}
               onPress={() => navigateTo("Habit", habit)}
               onMorePress={() =>
@@ -62,9 +64,9 @@ export default function Home() {
           <Content>
             <HeaderCornerImage source={PatternsImg} />
 
-            <HeaderText.Title message="Seja bem vindo" />
+            <HeaderText.Title message={language.getHomePageTitleMessage()} />
             <HeaderText.Subtitle
-              message={`Você tem ${habits.length} hábitos a serem quebrados`}
+              message={language.getHomePageSubtitleMessage(habits.length)}
             />
           </Content>
         )}

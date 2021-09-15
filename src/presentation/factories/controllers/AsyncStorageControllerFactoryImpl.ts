@@ -12,6 +12,7 @@ import {
   ShowHabitController,
   UpdateHabitController,
 } from "../../controllers";
+import { ILanguage } from "../../languages/interfaces";
 import {
   AsyncStorageRepositoryFactoryImpl,
   IRepositoryFactory,
@@ -22,7 +23,7 @@ export class AsyncStorageControllerFactoryImpl implements IControllerFactory {
   repositoryFactory: IRepositoryFactory =
     new AsyncStorageRepositoryFactoryImpl();
 
-  makeCreateHabitController(): CreateHabitController {
+  makeCreateHabitController(language: ILanguage): CreateHabitController {
     const createHabitRepository =
       this.repositoryFactory.makeCreateHabitRepository();
     const showHabitRepository =
@@ -32,18 +33,18 @@ export class AsyncStorageControllerFactoryImpl implements IControllerFactory {
       createHabitRepository
     );
 
-    return new CreateHabitController(useCase);
+    return new CreateHabitController(useCase, language);
   }
 
-  makeIndexHabitController(): IndexHabitController {
+  makeIndexHabitController(language: ILanguage): IndexHabitController {
     const indexHabitRepository =
       this.repositoryFactory.makeIndexHabitRepository();
     const useCase = new IndexHabitUseCase(indexHabitRepository);
 
-    return new IndexHabitController(useCase);
+    return new IndexHabitController(useCase, language);
   }
 
-  makeRemoveHabitController(): RemoveHabitController {
+  makeRemoveHabitController(language: ILanguage): RemoveHabitController {
     const showHabitRepository =
       this.repositoryFactory.makeShowHabitRepository();
     const removeHabitRepository =
@@ -53,10 +54,10 @@ export class AsyncStorageControllerFactoryImpl implements IControllerFactory {
       removeHabitRepository
     );
 
-    return new RemoveHabitController(useCase);
+    return new RemoveHabitController(useCase, language);
   }
 
-  makeUpdateHabitController(): UpdateHabitController {
+  makeUpdateHabitController(language: ILanguage): UpdateHabitController {
     const showHabitRepository =
       this.repositoryFactory.makeShowHabitRepository();
     const updateHabitRepository =
@@ -66,14 +67,14 @@ export class AsyncStorageControllerFactoryImpl implements IControllerFactory {
       showHabitRepository
     );
 
-    return new UpdateHabitController(useCase);
+    return new UpdateHabitController(useCase, language);
   }
 
-  makeShowHabitController(): ShowHabitController {
+  makeShowHabitController(language: ILanguage): ShowHabitController {
     const showHabitRepository =
       this.repositoryFactory.makeShowHabitRepository();
     const useCase = new ShowHabitUseCase(showHabitRepository);
 
-    return new ShowHabitController(useCase);
+    return new ShowHabitController(useCase, language);
   }
 }

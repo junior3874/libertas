@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 
 import { AsyncStorageControllerFactoryImpl } from "../factories/controllers/AsyncStorageControllerFactoryImpl";
 
@@ -8,34 +8,32 @@ import { CreateHabitDTO, UpdateHabitDTO } from "../../useCases/DTOs";
 import { toasts } from "../utils/toats";
 import { useCallback } from "react";
 import { BaseResponse } from "../controllers/type-defs";
+import { LanguageContext } from "./language";
 
 const makeControllers = new AsyncStorageControllerFactoryImpl();
-const indexHabitController = makeControllers.makeIndexHabitController();
-const createHabitController = makeControllers.makeCreateHabitController();
-const removeHabitController = makeControllers.makeRemoveHabitController();
-const updateHabitController = makeControllers.makeUpdateHabitController();
-const showHabitController = makeControllers.makeShowHabitController();
-
-type ResponseError = {
-  error: boolean;
-  errorMessage: string | null;
-};
 
 type HabitContextProps = {
   habits: Habit[];
-  addHabit: (habit: CreateHabitDTO) => Promise<ResponseError>;
-  updateHabit: (data: UpdateHabitDTO) => Promise<ResponseError>;
-  removeHabit: (name: string) => Promise<void>;
+  addHabit: (habit: CreateHabitDTO) => Promise<BaseResponse>;
+  updateHabit: (data: UpdateHabitDTO) => Promise<BaseResponse>;
+  removeHabit: (name: string) => Promise<BaseResponse>;
   showHabit: (name: string) => Promise<Habit>;
 };
 
 export const HabitContext = createContext({} as HabitContextProps);
 
 export const HabitProvider: React.FC = ({ children }) => {
-  const [error, setError] = useState<ResponseError>({
-    error: false,
-    errorMessage: null,
-  });
+  const { language } = useContext(LanguageContext);
+
+  const indexHabitController =
+    makeControllers.makeIndexHabitController(language);
+  const createHabitController =
+    makeControllers.makeCreateHabitController(language);
+  const removeHabitController =
+    makeControllers.makeRemoveHabitController(language);
+  const updateHabitController =
+    makeControllers.makeUpdateHabitController(language);
+  const showHabitController = makeControllers.makeShowHabitController(language);
 
   const [loadingRequest, setLoadingRequest] = useState(false);
   const [habits, setHabits] = useState<Habit[]>([]);
@@ -44,8 +42,6 @@ export const HabitProvider: React.FC = ({ children }) => {
     setLoadingRequest(true);
 
     const response = await indexHabitController.handle();
-
-    handleError(response);
 
     if (response.habits) setHabits(response.habits);
 
@@ -60,7 +56,6 @@ export const HabitProvider: React.FC = ({ children }) => {
     setLoadingRequest(true);
 
     const response = await createHabitController.handle(habit);
-    handleError(response);
     showToastMessage(response.message, !response.error);
 
     if (!response.error) {
@@ -68,51 +63,42 @@ export const HabitProvider: React.FC = ({ children }) => {
     }
     setLoadingRequest(false);
 
-    return error;
+    return response;
   };
 
   const updateHabit = async (data: UpdateHabitDTO) => {
     const response = await updateHabitController.handle(data);
 
-    handleError(response);
     showToastMessage(response.message, !response.error);
 
     if (!response.error) {
       await indexHabit();
     }
-    return error;
+
+    return response;
   };
 
   const removeHabit = async (name: string) => {
     const response = await removeHabitController.handle(name);
 
-    handleError(response);
     showToastMessage(response.message, !response.error);
 
     if (!response.error) {
       await indexHabit();
     }
+
+    return response;
   };
 
   const showHabit = useCallback(async (name: string): Promise<Habit> => {
     const response = await showHabitController.handle(name);
 
-    handleError(response);
-
     return response.habit!;
   }, []);
 
-  function handleError(responseError: BaseResponse): void {
-    if (responseError.error) {
-      setError({ error: true, errorMessage: responseError.message });
-    } else {
-      setError({ error: false, errorMessage: null });
-    }
-  }
-
   function showToastMessage(message: string, success: boolean) {
-    if (success) toasts.showSuccess(message);
-    if (!success) toasts.showError(message);
+    if (success) toasts.showSuccess(language.getSuccessToastTitle(), message);
+    if (!success) toasts.showError(language.getErrorToastTitle(), message);
   }
 
   return (

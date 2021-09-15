@@ -3,8 +3,13 @@ import { CreateHabitDTO } from "../../useCases/DTOs";
 import { HabitAlreadyExistsError } from "../../useCases/errors";
 import { ResponseWithHabit } from "./type-defs";
 import { MissingParamsError } from "../errors";
+import { ICreateHabitControllerLanguage } from "../languages/interfaces";
+
 export class CreateHabitController {
-  public constructor(private useCase: CreateHabitUseCase) {}
+  public constructor(
+    private useCase: CreateHabitUseCase,
+    private language: ICreateHabitControllerLanguage
+  ) {}
 
   async handle({
     name,
@@ -12,32 +17,48 @@ export class CreateHabitController {
   }: CreateHabitDTO): Promise<ResponseWithHabit> {
     try {
       if (!name) {
-        const error = new MissingParamsError(["habit name"]);
+        const error = new MissingParamsError([
+          this.language.getHabitNameParamMessage(),
+        ]);
         return {
-          message: error.message,
+          message: this.language.getMissingParamsErrorMessage([
+            this.language.getHabitNameParamMessage(),
+          ]),
           error: { instance: error },
           habit: null,
         };
       }
       const habit = await this.useCase.create({ name, performedLastDate });
 
-      return { message: "Habit created successfully", error: null, habit };
+      return {
+        message: this.language.getHabitCreatedSuccessfullyMessage(name),
+        error: null,
+        habit,
+      };
     } catch (err) {
       if (err instanceof HabitAlreadyExistsError) {
-        return { message: err.message, error: { instance: err }, habit: null };
+        return {
+          message: this.language.getHabitAlreadyExistsErrorMessage(name),
+          error: { instance: err },
+          habit: null,
+        };
       }
 
       if (!performedLastDate) {
-        const error = new MissingParamsError(["last date"]);
+        const error = new MissingParamsError([
+          this.language.getPerformedLastDateParamMessage(),
+        ]);
         return {
-          message: error.message,
+          message: this.language.getMissingParamsErrorMessage([
+            this.language.getPerformedLastDateParamMessage(),
+          ]),
           error: { instance: error },
           habit: null,
         };
       }
 
       return {
-        message: "Habit couldn't be created",
+        message: this.language.getHabitNotCreatedMessage(name),
         error: { instance: err },
         habit: null,
       };

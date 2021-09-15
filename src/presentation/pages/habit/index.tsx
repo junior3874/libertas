@@ -8,6 +8,8 @@ import BtnGeneric from "../../components/btnGeneric";
 import GoBackButton from "../../components/GoBackButton";
 import HeaderText from "../../components/HeaderText";
 import { HabitContext } from "../../context/habit";
+import { LanguageContext } from "../../context/language";
+import { IHabitPageLanguage } from "../../languages/interfaces/IHabitPageLanguage";
 import { StackParamList } from "../../routes";
 
 import {
@@ -24,7 +26,10 @@ import { getTimeSince, TimeSince } from "./utils/getTimeSince";
 let callFunctionToGetTimeElapsedInterval: any = null;
 
 export default function Habit() {
+  const { language }: { language: IHabitPageLanguage } =
+    useContext(LanguageContext);
   const { updateHabit, showHabit } = useContext(HabitContext);
+
   const isFocused = useIsFocused();
   const route = useRoute<RouteProp<StackParamList, "Habit">>();
   const [habit, setHabit] = useState({
@@ -82,21 +87,25 @@ export default function Habit() {
     <Container>
       <GoBackButton />
 
-      <HeaderText.Title message="Sobre o hábito" />
-      <HeaderText.Subtitle message="Há quanto tempo você está sóbrio" />
+      <HeaderText.Title message={language.getHabitPageTitleMessage()} />
+      <HeaderText.Subtitle message={language.getHabitPageSubtitleMessage()} />
 
       <TimeElapsedContainer>
         <TimeElapsedBoxPairContainer>
           <TimeElapsedBoxWrapper>
             <TimeElapsedBox>
-              <TimeElapsedTitle>Dias</TimeElapsedTitle>
+              <TimeElapsedTitle>
+                {language.getHabitPageDaysMessage()}
+              </TimeElapsedTitle>
               <TimeElapsedCount>{timeElapsed.days}</TimeElapsedCount>
             </TimeElapsedBox>
           </TimeElapsedBoxWrapper>
 
           <TimeElapsedBoxWrapper isRightSideElement>
             <TimeElapsedBox isRightSideElement>
-              <TimeElapsedTitle>Horas</TimeElapsedTitle>
+              <TimeElapsedTitle>
+                {language.getHabitPageHoursMessage()}
+              </TimeElapsedTitle>
               <TimeElapsedCount>{timeElapsed.hours}</TimeElapsedCount>
             </TimeElapsedBox>
           </TimeElapsedBoxWrapper>
@@ -105,14 +114,18 @@ export default function Habit() {
         <TimeElapsedBoxPairContainer applyMarginTop>
           <TimeElapsedBoxWrapper>
             <TimeElapsedBox>
-              <TimeElapsedTitle>Minutos</TimeElapsedTitle>
+              <TimeElapsedTitle>
+                {language.getHabitPageMinutesMessage()}
+              </TimeElapsedTitle>
               <TimeElapsedCount>{timeElapsed.minutes}</TimeElapsedCount>
             </TimeElapsedBox>
           </TimeElapsedBoxWrapper>
 
           <TimeElapsedBoxWrapper isRightSideElement>
             <TimeElapsedBox isRightSideElement>
-              <TimeElapsedTitle>Segundos</TimeElapsedTitle>
+              <TimeElapsedTitle>
+                {language.getHabitPageSecondsMessage()}
+              </TimeElapsedTitle>
               <TimeElapsedCount>{timeElapsed.seconds}</TimeElapsedCount>
             </TimeElapsedBox>
           </TimeElapsedBoxWrapper>
@@ -120,7 +133,7 @@ export default function Habit() {
       </TimeElapsedContainer>
 
       <BtnGeneric
-        title="Resetar tempo"
+        title={language.getHabitPageResetTimeButtonMessage()}
         onPress={resetTimer}
         backgroundColor="#6410E6"
       />

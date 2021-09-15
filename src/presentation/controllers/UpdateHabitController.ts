@@ -7,8 +7,12 @@ import { ResponseWithHabit } from "./type-defs";
 import { UpdateHabitDTO } from "../../useCases/DTOs";
 import { MissingParamsError } from "../errors";
 import { NewNameIsEqualToOldOneError } from "../errors/NewNameIsEqualToOldOneError";
+import { IUpdateHabitControllerLanguage } from "../languages/interfaces";
 export class UpdateHabitController {
-  public constructor(private useCase: UpdateHabitUseCase) {}
+  public constructor(
+    private useCase: UpdateHabitUseCase,
+    private language: IUpdateHabitControllerLanguage
+  ) {}
 
   async handle({
     currentName,
@@ -16,18 +20,23 @@ export class UpdateHabitController {
     performedLastDate,
   }: UpdateHabitDTO): Promise<ResponseWithHabit> {
     if (!currentName) {
-      const error = new MissingParamsError(["current name"]);
+      const params = [this.language.getCurrentNameParamMessage()];
+      const error = new MissingParamsError(params);
       return {
-        message: error.message,
+        message: this.language.getMissingParamsErrorMessage(params),
         error: { instance: error },
         habit: null,
       };
     }
 
     if (!newName && !performedLastDate) {
-      const error = new MissingParamsError(["name", "date"]);
+      const params = [
+        this.language.getHabitNameParamMessage(),
+        this.language.getPerformedLastDateParamMessage(),
+      ];
+      const error = new MissingParamsError(params);
       return {
-        message: error.message,
+        message: this.language.getMissingParamsErrorMessage(params),
         error: { instance: error },
         habit: null,
       };
@@ -36,7 +45,7 @@ export class UpdateHabitController {
     if (currentName === newName) {
       const error = new NewNameIsEqualToOldOneError();
       return {
-        message: error.message,
+        message: this.language.getNewNameIsEqualToOldOneErrorMessage(),
         error: { instance: error },
         habit: null,
       };
@@ -48,17 +57,30 @@ export class UpdateHabitController {
         newName,
         performedLastDate,
       });
-      return { message: "Habit updated successfully", error: null, habit };
+      return {
+        message: this.language.getHabitUpdatedSuccessfullyMessage(),
+        error: null,
+        habit,
+      };
     } catch (err) {
-      if (
-        err instanceof NoHabitFoundError ||
-        err instanceof HabitAlreadyExistsError
-      ) {
-        return { message: err.message, error: { instance: err }, habit: null };
+      if (err instanceof NoHabitFoundError) {
+        return {
+          message: this.language.getNoHabitFoundErrorMessage(),
+          error: { instance: err },
+          habit: null,
+        };
+      }
+
+      if (err instanceof HabitAlreadyExistsError) {
+        return {
+          message: this.language.getHabitAlreadyExistsErrorMessage(newName!),
+          error: { instance: err },
+          habit: null,
+        };
       }
 
       return {
-        message: "Habit couldn't be updated",
+        message: this.language.getHabitNotUpdatedMessage(),
         error: {
           instance: err,
         },

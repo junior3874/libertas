@@ -7,6 +7,8 @@ import Form from "../../components/Form";
 import GoBackButton from "../../components/GoBackButton";
 import HeaderText from "../../components/HeaderText";
 import { HabitContext } from "../../context/habit";
+import { LanguageContext } from "../../context/language";
+import { IUpdateHabitPageLanguage } from "../../languages/interfaces/IUpdateHabitPageLanguage";
 import { defaultHabitOptions } from "../../lib/defaultHabits";
 import { StackParamList } from "../../routes";
 
@@ -19,6 +21,8 @@ export default function UpdateHabit() {
   // Contexts
   //==================================================================
 
+  const { language }: { language: IUpdateHabitPageLanguage } =
+    useContext(LanguageContext);
   const { updateHabit, removeHabit } = useContext(HabitContext);
 
   //==================================================================
@@ -70,13 +74,15 @@ export default function UpdateHabit() {
       activeOpacity={1}
     >
       <GoBackButton />
-      <HeaderText.Title message="Editar hábito" />
-      <HeaderText.Subtitle message="Escolha qual opção você quer editar" />
+      <HeaderText.Title message={language.getUpdateHabitPageTitleMessage()} />
+      <HeaderText.Subtitle
+        message={language.getUpdateHabitPageSubtitleMessage()}
+      />
       <FormWrapper>
-        <Form.Label message="Qual hábito você quer enfrentar?" />
+        <Form.Label message={language.getDropdownInputMessage()} />
         <Form.DropdownWrapper>
           <Form.Dropdown
-            title="Selecione um hábito"
+            title={language.getDropdownInputTitlePropMessage()}
             options={defaultHabitOptions}
             isDropdownOpen={isDropdownOpen}
             onDropdownOpen={() => setIsDropdownOpen(true)}
@@ -88,8 +94,9 @@ export default function UpdateHabit() {
 
         <View style={{ height: 36 }} />
 
-        <Form.Label message="Última vez que você se rendeu a este hábito" />
+        <Form.Label message={language.getDateInputMessage()} />
         <Form.DateInput
+          title={language.getDateInputTitlePropMessage()}
           onPress={openCalendar}
           value={date}
           setLastDate={_setLastDate}
@@ -101,14 +108,14 @@ export default function UpdateHabit() {
         <BtnGeneric
           backgroundColor="#6410E6"
           onPress={onUpdateHabit}
-          title="Editar hábito"
+          title={language.getUpdateHabitButtonMessage()}
         />
       </EditButtonWrapper>
 
       <BtnGeneric
         backgroundColor="#D62828"
         onPress={onRemoveHabit}
-        title="Excluir hábito"
+        title={language.getDeleteHabitButtonMessage()}
       />
     </Container>
   );

@@ -1,14 +1,16 @@
 import { mock } from "jest-mock-extended";
 import { ShowHabitUseCase } from "../../useCases";
 import { NoHabitFoundError } from "../../useCases/errors";
+import { IShowHabitControllerLanguage } from "../languages/interfaces";
 import { ShowHabitController } from "./ShowHabitController";
 import { ResponseWithHabit } from "./type-defs";
 
 function makeSut() {
   const showHabitUseCaseMock = mock<ShowHabitUseCase>();
-  const sut = new ShowHabitController(showHabitUseCaseMock);
+  const languageMock = mock<IShowHabitControllerLanguage>();
+  const sut = new ShowHabitController(showHabitUseCaseMock, languageMock);
 
-  return { sut, showHabitUseCaseMock };
+  return { sut, showHabitUseCaseMock, languageMock };
 }
 
 describe("Show Habit controller", () => {
@@ -23,7 +25,7 @@ describe("Show Habit controller", () => {
   });
 
   it("should return ResponseWithHabit with error.instance being a NoHabitFoundError", async () => {
-    const { sut, showHabitUseCaseMock } = makeSut();
+    const { sut, showHabitUseCaseMock, languageMock } = makeSut();
     showHabitUseCaseMock.show.mockImplementationOnce(() => {
       throw new NoHabitFoundError();
     });
@@ -32,19 +34,22 @@ describe("Show Habit controller", () => {
       "My non-existent habit"
     );
 
-    expect(response.error!.instance).toEqual(new NoHabitFoundError());
+    expect(response.message).toEqual(
+      languageMock.getNoHabitFoundErrorMessage()
+    );
   });
 
   it("should return ResponseWithHabit with a generic error message", async () => {
-    const { sut, showHabitUseCaseMock } = makeSut();
+    const { sut, showHabitUseCaseMock, languageMock } = makeSut();
     showHabitUseCaseMock.show.mockImplementationOnce(() => {
       throw new Error("Server side error occurred");
     });
+    const habitName = "My non-existent habit";
 
-    const response: ResponseWithHabit = await sut.handle(
-      "My non-existent habit"
+    const response: ResponseWithHabit = await sut.handle(habitName);
+
+    expect(response.message).toBe(
+      languageMock.getHabitNotLoadedMessage(habitName)
     );
-
-    expect(response.message).toBe("Habit couldn't be found");
   });
 });
