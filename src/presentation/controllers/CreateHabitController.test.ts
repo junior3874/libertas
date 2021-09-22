@@ -37,6 +37,9 @@ describe("Create Habit controller", () => {
     createHabitUseCaseMock.create.mockImplementationOnce(() => {
       throw new HabitAlreadyExistsError(newHabit.name);
     });
+    languageMock.getHabitAlreadyExistsErrorMessage.mockReturnValue(
+      "mocked already exists err msg"
+    );
 
     const response = await sut.handle(newHabit);
 
@@ -55,6 +58,9 @@ describe("Create Habit controller", () => {
     createHabitUseCaseMock.create.mockImplementationOnce(() => {
       throw errorThrown;
     });
+    languageMock.getHabitNotCreatedMessage.mockReturnValue(
+      "mocked not created err msg"
+    );
 
     const response = await sut.handle(newHabit);
 
@@ -67,6 +73,10 @@ describe("Create Habit controller", () => {
     const { sut, createHabitUseCaseMock, languageMock } = makeSut();
     const habitToBeCreated = { name: "", performedLastDate: new Date() };
     createHabitUseCaseMock.create.mockResolvedValueOnce(habitToBeCreated);
+    languageMock.getMissingParamsErrorMessage.mockImplementation(
+      (params) => `mocked ${params} err msg`
+    );
+    languageMock.getHabitNameParamMessage.mockReturnValue("name");
 
     const response: ResponseWithHabit = await sut.handle(habitToBeCreated);
 
