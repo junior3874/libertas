@@ -5,7 +5,6 @@ import {
   HabitAlreadyExistsError,
   NoHabitFoundError,
 } from "../../useCases/errors";
-import { NewNameIsEqualToOldOneError } from "../errors";
 import { IUpdateHabitControllerLanguage } from "../languages/interfaces";
 import { ResponseWithHabit } from "./type-defs";
 import { UpdateHabitController } from "./UpdateHabitController";
@@ -37,6 +36,9 @@ describe("Update Habit controller", () => {
     updateHabitUseCaseMock.update.mockImplementationOnce(() => {
       throw new Error("Server side error occurred");
     });
+    languageMock.getHabitNotUpdatedMessage.mockReturnValue(
+      "mocked not updated err msg"
+    );
 
     const response: ResponseWithHabit = await sut.handle({
       currentName: "No-habit",
@@ -52,6 +54,9 @@ describe("Update Habit controller", () => {
     updateHabitUseCaseMock.update.mockImplementationOnce(() => {
       throw new NoHabitFoundError();
     });
+    languageMock.getNoHabitFoundErrorMessage.mockReturnValue(
+      "mocked not found err msg"
+    );
 
     const response: ResponseWithHabit = await sut.handle({
       currentName: "No-habit",
@@ -69,6 +74,9 @@ describe("Update Habit controller", () => {
     updateHabitUseCaseMock.update.mockImplementationOnce(() => {
       throw new HabitAlreadyExistsError("Testing");
     });
+    languageMock.getHabitAlreadyExistsErrorMessage.mockReturnValue(
+      "mocked already exists err msg"
+    );
 
     const response: ResponseWithHabit = await sut.handle({
       currentName: "No-habit",
@@ -89,6 +97,9 @@ describe("Update Habit controller", () => {
       newName: oldHabit.name,
     };
     updateHabitUseCaseMock.update.mockResolvedValueOnce(oldHabit);
+    languageMock.getNewNameIsEqualToOldOneErrorMessage.mockReturnValue(
+      "mocked name is equal err msg"
+    );
 
     const response: ResponseWithHabit = await sut.handle(newUpdatedHabit);
 
@@ -104,6 +115,10 @@ describe("Update Habit controller", () => {
       newName: "My updated habit name",
     };
     updateHabitUseCaseMock.update.mockResolvedValueOnce(oldHabit);
+    languageMock.getMissingParamsErrorMessage.mockImplementation(
+      (params) => `mocked missing ${params} err msg`
+    );
+    languageMock.getCurrentNameParamMessage.mockReturnValue("current name");
 
     const response: ResponseWithHabit = await sut.handle(
       newUpdatedHabit as UpdateHabitDTO
@@ -120,6 +135,11 @@ describe("Update Habit controller", () => {
     const oldHabit = { name: "My habit", performedLastDate: new Date() };
     const newUpdatedHabit: UpdateHabitDTO = { currentName: oldHabit.name };
     updateHabitUseCaseMock.update.mockResolvedValueOnce(oldHabit);
+    languageMock.getMissingParamsErrorMessage.mockImplementation(
+      (params) => `mocked missing ${params} err msg`
+    );
+    languageMock.getHabitNameParamMessage.mockReturnValue("name");
+    languageMock.getPerformedLastDateParamMessage.mockReturnValue("date");
 
     const response: ResponseWithHabit = await sut.handle(newUpdatedHabit);
 
