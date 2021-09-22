@@ -1,3 +1,4 @@
+import { IFutureDateErrorLanguage } from "./IFutureDateErrorLanguage";
 import { IHabitAlreadyExistsErrorLanguage } from "./IHabitAlreadyExistsErrorLanguage";
 import { IMissingParamsErrorLanguage } from "./IMissingParamsErrorLanguage";
 import { INewNameIsEqualToOldOneErrorLanguage } from "./INewNameIsEqualToOldOneErrorLanguage";
@@ -7,7 +8,8 @@ export interface IUpdateHabitControllerLanguage
   extends IMissingParamsErrorLanguage,
     INewNameIsEqualToOldOneErrorLanguage,
     IHabitAlreadyExistsErrorLanguage,
-    INoHabitFoundErrorLanguage {
+    INoHabitFoundErrorLanguage,
+    IFutureDateErrorLanguage {
   getHabitUpdatedSuccessfullyMessage(): string;
   getHabitNotUpdatedMessage(): string;
 }

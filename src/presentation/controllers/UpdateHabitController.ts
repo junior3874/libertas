@@ -8,6 +8,8 @@ import { UpdateHabitDTO } from "../../useCases/DTOs";
 import { MissingParamsError } from "../errors";
 import { NewNameIsEqualToOldOneError } from "../errors/NewNameIsEqualToOldOneError";
 import { IUpdateHabitControllerLanguage } from "../languages/interfaces";
+import { FutureDateError } from "../../entities/errors";
+
 export class UpdateHabitController {
   public constructor(
     private useCase: UpdateHabitUseCase,
@@ -74,6 +76,14 @@ export class UpdateHabitController {
       if (err instanceof HabitAlreadyExistsError) {
         return {
           message: this.language.getHabitAlreadyExistsErrorMessage(newName!),
+          error: { instance: err },
+          habit: null,
+        };
+      }
+
+      if (err instanceof FutureDateError) {
+        return {
+          message: this.language.getFutureDateErrorMessage(performedLastDate!),
           error: { instance: err },
           habit: null,
         };

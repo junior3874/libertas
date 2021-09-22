@@ -1,4 +1,5 @@
 import { mock } from "jest-mock-extended";
+import { FutureDateError } from "../../entities/errors";
 import { UpdateHabitUseCase } from "../../useCases";
 import { UpdateHabitDTO } from "../../useCases/DTOs";
 import {
@@ -148,5 +149,25 @@ describe("Update Habit controller", () => {
       languageMock.getPerformedLastDateParamMessage(),
     ]);
     expect(response.message).toBe(expectedMessage);
+  });
+
+  it("should return ResponseWithHabit with FutureDateError", async () => {
+    const { sut, updateHabitUseCaseMock, languageMock } = makeSut();
+    const habit = { name: "My habit", performedLastDate: new Date() };
+    const nowMs = new Date().getTime();
+    const futureDate = new Date(nowMs + 86400 * 1000);
+    updateHabitUseCaseMock.update.mockImplementationOnce(() => {
+      throw new FutureDateError(futureDate);
+    });
+
+    const response: ResponseWithHabit = await sut.handle({
+      currentName: "My habit",
+      newName: "My updated habit name",
+      performedLastDate: futureDate,
+    });
+
+    expect(response.message).toBe(
+      languageMock.getFutureDateErrorMessage(futureDate)
+    );
   });
 });
