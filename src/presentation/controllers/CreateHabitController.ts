@@ -4,6 +4,7 @@ import { HabitAlreadyExistsError } from "../../useCases/errors";
 import { ResponseWithHabit } from "./type-defs";
 import { MissingParamsError } from "../errors";
 import { ICreateHabitControllerLanguage } from "../languages/interfaces";
+import { FutureDateError } from "../../entities/errors";
 
 export class CreateHabitController {
   public constructor(
@@ -39,6 +40,14 @@ export class CreateHabitController {
       if (err instanceof HabitAlreadyExistsError) {
         return {
           message: this.language.getHabitAlreadyExistsErrorMessage(name),
+          error: { instance: err },
+          habit: null,
+        };
+      }
+
+      if (err instanceof FutureDateError) {
+        return {
+          message: this.language.getFutureDateErrorMessage(performedLastDate),
           error: { instance: err },
           habit: null,
         };

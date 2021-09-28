@@ -1,6 +1,10 @@
 import { ILanguage } from "./interfaces";
 
 export class PTBRLanguage implements ILanguage {
+  getFutureDateErrorMessage(date: Date): string {
+    return "Data não pode estar no futuro";
+  }
+
   getDropdownInputTitlePropMessage(): string {
     return "Selecione um vício";
   }

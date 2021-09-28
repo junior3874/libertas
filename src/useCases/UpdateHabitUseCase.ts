@@ -14,8 +14,8 @@ export class UpdateHabitUseCase {
     newName,
     performedLastDate,
   }: UpdateHabitDTO): Promise<Habit> {
-    const habitExists = await this.showRepository.show(currentName);
-    if (!habitExists) {
+    const existentHabit = await this.showRepository.show(currentName);
+    if (!existentHabit) {
       throw new NoHabitFoundError();
     }
 
@@ -26,10 +26,14 @@ export class UpdateHabitUseCase {
       }
     }
 
+    const newHabit = new Habit(
+      newName || currentName,
+      performedLastDate || existentHabit.performedLastDate
+    );
     const updatedHabit = await this.updateRepository.update({
-      currentName,
-      newName,
-      performedLastDate,
+      currentName: existentHabit.name,
+      newName: newHabit.name,
+      performedLastDate: newHabit.performedLastDate,
     });
 
     return updatedHabit;

@@ -1,6 +1,10 @@
 import { ILanguage } from "./interfaces";
 
 export class ENUSLanguage implements ILanguage {
+  getFutureDateErrorMessage(date: Date): string {
+    return "Date can't be in the future";
+  }
+
   getDropdownInputTitlePropMessage(): string {
     return "Select a bad habit";
   }
